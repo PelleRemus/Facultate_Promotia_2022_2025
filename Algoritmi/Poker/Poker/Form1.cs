@@ -29,8 +29,8 @@ namespace Poker
             Image.FromFile("../../Images/9OfClubs card.png"),
             Image.FromFile("../../Images/10OfClubs card.png"),
             Image.FromFile("../../Images/JackOfClubs card.png"),
-            Image.FromFile("../../Images/KingOfClubs card.png"),
             Image.FromFile("../../Images/QueenOfClubs card.png"),
+            Image.FromFile("../../Images/KingOfClubs card.png"),
             Image.FromFile("../../Images/AceOfClubs card.png"),     // 12
 
             Image.FromFile("../../Images/2OfSpades card.png"),      // 13
@@ -43,8 +43,8 @@ namespace Poker
             Image.FromFile("../../Images/9OfSpades card.png"),
             Image.FromFile("../../Images/10OfSpades card.png"),
             Image.FromFile("../../Images/JackOfSpades card.png"),
-            Image.FromFile("../../Images/KingOfSpades card.png"),
             Image.FromFile("../../Images/QueenOfSpades card.png"),
+            Image.FromFile("../../Images/KingOfSpades card.png"),
             Image.FromFile("../../Images/AceOfSpades card.png"),    // 25
 
             Image.FromFile("../../Images/2OfHearts card.png"),      // 26
@@ -57,8 +57,8 @@ namespace Poker
             Image.FromFile("../../Images/9OfHearts card.png"),
             Image.FromFile("../../Images/10OfHearts card.png"),
             Image.FromFile("../../Images/JackOfHearts card.png"),
-            Image.FromFile("../../Images/KingOfHearts card.png"),
             Image.FromFile("../../Images/QueenOfHearts card.png"),
+            Image.FromFile("../../Images/KingOfHearts card.png"),
             Image.FromFile("../../Images/AceOfHearts card.png"),    // 38
 
             Image.FromFile("../../Images/2OfDiamonds card.png"),    // 39
@@ -71,8 +71,8 @@ namespace Poker
             Image.FromFile("../../Images/9OfDiamonds card.png"),
             Image.FromFile("../../Images/10OfDiamonds card.png"),
             Image.FromFile("../../Images/JackOfDiamonds card.png"),
-            Image.FromFile("../../Images/KingOfDiamonds card.png"),
             Image.FromFile("../../Images/QueenOfDiamonds card.png"),
+            Image.FromFile("../../Images/KingOfDiamonds card.png"),
             Image.FromFile("../../Images/AceOfDiamonds card.png"),  // 51
         };
         Random random = new Random();
@@ -106,7 +106,7 @@ namespace Poker
             CardDealingAnimation(p2_2, cardsImages[cardsOrder[6]]); await Task.Delay(200);
             CardDealingAnimation(p2_3, cardsImages[cardsOrder[7]]); await Task.Delay(200);
             CardDealingAnimation(p2_4, cardsImages[cardsOrder[8]]); await Task.Delay(200);
-            CardDealingAnimation(p2_5, cardsImages[cardsOrder[9]]); await Task.Delay(200);
+            CardDealingAnimation(p2_5, cardsImages[cardsOrder[9]]); await Task.Delay(2000);
 
             button1.Enabled = true;
             button2.Enabled = true;
@@ -124,6 +124,35 @@ namespace Poker
                 power1 = 800;
             else if (FourOfAKind(true))
                 power1 = 700;
+            else if (FullHouse(true))
+                power1 = 600;
+            else if (Flush(true))
+                power1 = 500;
+            else if (Straight(true))
+                power1 = 400;
+            else if (ThreeOfAKind(true))
+                power1 = 300;
+            else if (TwoPairs(true))
+                power1 = 200;
+            else if (OnePair(true))
+                power1 = 100;
+
+            if (StraightFlush(false))
+                power2 = 800;
+            else if (FourOfAKind(false))
+                power2 = 700;
+            else if (FullHouse(false))
+                power2 = 600;
+            else if (Flush(false))
+                power2 = 500;
+            else if (Straight(false))
+                power2 = 400;
+            else if (ThreeOfAKind(false))
+                power2 = 300;
+            else if (TwoPairs(false))
+                power2 = 200;
+            else if (OnePair(false))
+                power2 = 100;
         }
 
         private void Shuffle()
@@ -145,11 +174,11 @@ namespace Poker
         private async Task CardDealingAnimation(PictureBox destination, Image cardImage)
         {
             PictureBox card = CreatePictureBoxForNewCard();
-            float percent = 100F / Distance(card.Location, destination.Location);
+            float percent = 30F / Distance(card.Location, destination.Location);
 
             for (int i = 1; i <= 100; i++)
             {
-                await Task.Delay(i);
+                await Task.Delay(i / 5);
                 float x = card.Location.X + percent * (destination.Location.X - card.Location.X);
                 float y = card.Location.Y + percent * (destination.Location.Y - card.Location.Y);
                 card.Location = new Point((int)x, (int)y);
@@ -270,7 +299,7 @@ namespace Poker
                cardsOrder[index] / 13 == cardsOrder[index + 2] / 13 &&
                cardsOrder[index] / 13 == cardsOrder[index + 3] / 13 &&
                cardsOrder[index] / 13 == cardsOrder[index + 4] / 13)
-               return true;
+                return true;
             return false;
         }
 
@@ -282,9 +311,10 @@ namespace Poker
             // pentru a obtine toate combinatiile, luam verificarea de la one pair
             // si verificam daca celelalte 3 numere sunt egale intre ele
             if ((a == b && c == d && c == e) || (a == c && b == d && b == e) ||
-                a == d || a == e ||
-                b == c || b == d || b == e ||
-                c == d || c == e || d == e)
+                (a == d && b == c && b == e) || (a == e && b == c && b == d) ||
+                (b == c && a == d && a == e) || (b == d && a == c && a == e) ||
+                (b == e && a == c && a == d) || (c == d && a == b && a == e) ||
+                (c == e && a == b && a == d) || (d == e && a == b && a == c))
                 return true;
             return false;
         }
@@ -301,7 +331,7 @@ namespace Poker
             if ((a == b && a == c && a == d) || (a == b && a == c && a == e) ||
                 (a == b && a == d && a == e) || (a == c && a == d && a == e) ||
                 (b == c && b == d && b == e))
-                return true;   
+                return true;
             return false;
         }
 
