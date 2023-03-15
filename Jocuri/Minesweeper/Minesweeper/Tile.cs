@@ -9,6 +9,10 @@ namespace Minesweeper
         public int line, column;
         public int value;
 
+        // aceasta metoda este speciala, numita constructor. O puteti identifica prin faptul ca
+        // nu are tip de return, nici macar void, si are acelasi nume ca si clasa
+        // aceasta metoda are rolul de a initializa field-urile clasei, si este apelata automat
+        // in momentul in care scriem "new Tile(i, j)": observati ca avem paranteze si parametrii necesari, deci apelam metoda
         public Tile(int i, int j) 
         {
             line = i; column = j;

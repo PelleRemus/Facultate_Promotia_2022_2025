@@ -4,7 +4,8 @@ namespace Minesweeper
 {
     // clasele statice se folosesc fara obiecte, si nu au constructor
     // observati ca pentru a folosi fielduri din clasa Engine, vom scrie direct "Engine.fieldName"
-    // deci direct cu numele clasei, pe cant pentru clasa Tile, folosim un obiect al acestei clase: "buttons[i, j].fieldName"
+    // deci direct cu numele clasei, pe cand pentru clasa Tile, folosim un obiect al acestei clase: "buttons[i, j].fieldName"
+    // poate va este mai usor daca va ganditi ca avem clasa in sine ca si singurul obiect al clasei
     public static class Engine
     {
         public static Form1 form;
