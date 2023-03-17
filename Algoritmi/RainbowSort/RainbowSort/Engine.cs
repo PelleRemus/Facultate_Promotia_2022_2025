@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace RainbowSort
@@ -47,14 +48,42 @@ namespace RainbowSort
 
         public static void Bubble()
         {
+            int k = 0;
+            bool ok;
+            do
+            {
+                ok = true;
+                for (int i = 0; i < Resources.n - k - 1; i++)
+                    if (Resources.rainbow[i].value > Resources.rainbow[i + 1].value)
+                    {
+                        Swap(i, i + 1);
+                        ok = false;
+                    }
+                k++;
+            } while (!ok);
         }
 
         public static void Insertion()
         {
+            for (int i = 1; i < Resources.n; i++)
+                for (int j = i; j > 0; j--)
+                    if (Resources.rainbow[j].value < Resources.rainbow[j - 1].value)
+                        Swap(j, j - 1);
         }
 
         public static void Selection()
         {
+            for (int i = 0; i < Resources.n; i++)
+            {
+                int minIndex = i;
+                for (int j = i + 1; j < Resources.n; j++)
+                {
+                    UpdatePositionsVisually(i, j);
+                    if (Resources.rainbow[minIndex].value > Resources.rainbow[j].value)
+                        minIndex = j;
+                }
+                Swap(i, minIndex);
+            }
         }
 
         public static void QuickSort(int left, int right)

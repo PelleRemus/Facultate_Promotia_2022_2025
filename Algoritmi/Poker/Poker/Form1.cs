@@ -153,6 +153,13 @@ namespace Poker
                 power2 = 200;
             else if (OnePair(false))
                 power2 = 100;
+
+            if(power1 > power2)
+                MessageBox.Show("Player 1 has won!", "Game Over");
+            else if(power2 > power1)
+                MessageBox.Show("Player 2 has won!", "Game Over");
+            else
+                MessageBox.Show("It's a draw!", "Game Over");
         }
 
         private void Shuffle()
@@ -270,7 +277,7 @@ namespace Poker
             // facem orice sortare pentru cartile jucatorului curent, in functie de numar
             // din nou, facem %13 si pentru a determina ordinea cartilor (si daca sunt consecutive sau nu)
             for (int i = index; i < index + 5; i++)
-                for (int j = 0; j < index + 5; j++)
+                for (int j = index; j < index + 5; j++)
                     if (cardsOrder[i] % 13 < cardsOrder[j] % 13)
                         Swap(i, j);
 
