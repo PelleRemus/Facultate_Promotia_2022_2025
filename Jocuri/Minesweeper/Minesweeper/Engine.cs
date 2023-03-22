@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Minesweeper
 {
@@ -57,15 +60,70 @@ namespace Minesweeper
                 for (int k = i - 1; k <= i + 1; k++)
                     for (int l = j - 1; l <= j + 1; l++)
                     {
-                        if (k >= 0 && k < lines && l >= 0 && l < lines)
+                        if (k >= 0 && k < lines && l >= 0 && l < lines && buttons[k, l].value != 9)
                         {
-                            if (buttons[k, l].value != 9)
-                                buttons[k, l].value++;
-
-                            buttons[k, l].button.BackgroundImage = form.images[buttons[k, l].value];
+                            buttons[k, l].value++;
                         }
                     }
             }
+        }
+
+        public static void TraverseMatrix(int i, int j)
+        {
+            // verificam sa nu iesim afara din matrice. Nu putem traversa butoanele deja vizitate
+            if (i < 0 || j < 0 || i >= lines || j >= lines || buttons[i, j].isVisited)
+                return;
+
+            buttons[i, j].isVisited = true;
+            if (buttons[i, j].value == 0)
+            {
+                buttons[i, j].button.BackColor = Color.White;
+                // daca valoarea este 0, traversam si pozitiile din stanga, sus, dreapta si jos a butonului curent
+                TraverseMatrix(i - 1, j);
+                TraverseMatrix(i, j - 1);
+                TraverseMatrix(i + 1, j);
+                TraverseMatrix(i, j + 1);
+            }
+            else
+            {
+                // afisam valoarea din spatele butonului
+                buttons[i, j].button.BackgroundImage = form.images[buttons[i, j].value];
+            }
+        }
+
+        public static void GameLost()
+        {
+            // cand pierdem jocul, afisam toate minele
+            for (int i = 0; i < lines; i++)
+                for (int j = 0; j < lines; j++)
+                {
+                    if (buttons[i, j].value == 9)
+                        buttons[i, j].button.BackgroundImage = form.images.Last();
+                }
+
+            // si apoi afisam un mesaj, si apoi facem disable la butoane pentru a nu ne putea juca in continuare
+            MessageBox.Show("Mort DX", "Game Over!");
+            SetEnabledToAllButtons(false);
+        }
+
+        public static bool CheckIfYouWin()
+        {
+            // am castigat daca toate minele sunt flagged, si in acelasi timp niciun alt buton nu este flagged
+            for(int i = 0; i < lines; i++)
+                for(int j = 0; j < lines; j++)
+                {
+                    if ((buttons[i,j].value == 9 && !buttons[i, j].isFlagged)
+                        || buttons[i, j].value != 9 && buttons[i, j].isFlagged)
+                        return false;
+                }
+            return true;
+        }
+
+        public static void SetEnabledToAllButtons(bool isEnabled)
+        {
+            for (int i = 0; i < lines; i++)
+                for (int j = 0; j < lines; j++)
+                    buttons[i, j].button.Enabled = isEnabled;
         }
     }
 }
