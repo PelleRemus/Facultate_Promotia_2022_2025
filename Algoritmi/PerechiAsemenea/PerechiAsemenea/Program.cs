@@ -14,8 +14,8 @@ namespace PerechiAsemenea
             string buffer = reader.ReadLine();
             string[] split = buffer.Split(' ');
             // convertim valorile (care deocamdata sunt string) la valori intregi. Pe prima linie, avem na si nb, in aceasta ordine
-            int na = int.Parse(split.First());
-            int nb = int.Parse(split.Last());
+            int na = int.Parse(split[0]);
+            int nb = int.Parse(split[1]);
 
             // citim urmatoarea linie si separam valorile prin spatiu
             buffer = reader.ReadLine();

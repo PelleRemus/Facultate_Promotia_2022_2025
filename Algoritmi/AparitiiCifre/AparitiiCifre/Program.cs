@@ -56,12 +56,10 @@ namespace AparitiiCifre
         static int AddDigitsFromFrequency(int number, int digit, int frequency)
         {
             // adaugam doar jumatate din cifre, cealalta jumatate va fi afisata in al doilea for
-            frequency = frequency / 2;
             // frequency ne spune cate cifre trebuie sa adaugam la finalul numarului
-            while (frequency != 0)
+            for (int i = 0; i < frequency / 2; i++)
             {
                 number = number * 10 + digit;
-                frequency--;
             }
             return number;
         }
