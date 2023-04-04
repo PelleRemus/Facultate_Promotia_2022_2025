@@ -40,6 +40,11 @@
             this.diagonalaPrincipala = new System.Windows.Forms.Button();
             this.diagonalaSecundara = new System.Windows.Forms.Button();
             this.NSEV = new System.Windows.Forms.Button();
+            this.romb = new System.Windows.Forms.Button();
+            this.diagonale = new System.Windows.Forms.Button();
+            this.tricolor = new System.Windows.Forms.Button();
+            this.serpuit = new System.Windows.Forms.Button();
+            this.picaturi = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,6 +89,8 @@
             // 
             // chenar
             // 
+            this.chenar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("chenar.BackgroundImage")));
+            this.chenar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.chenar.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
             this.chenar.Location = new System.Drawing.Point(718, 307);
             this.chenar.Name = "chenar";
@@ -95,6 +102,8 @@
             // 
             // spirala
             // 
+            this.spirala.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("spirala.BackgroundImage")));
+            this.spirala.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.spirala.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
             this.spirala.Location = new System.Drawing.Point(956, 307);
             this.spirala.Name = "spirala";
@@ -128,6 +137,8 @@
             // 
             // diagonalaPrincipala
             // 
+            this.diagonalaPrincipala.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("diagonalaPrincipala.BackgroundImage")));
+            this.diagonalaPrincipala.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.diagonalaPrincipala.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
             this.diagonalaPrincipala.Location = new System.Drawing.Point(718, 353);
             this.diagonalaPrincipala.Name = "diagonalaPrincipala";
@@ -139,6 +150,8 @@
             // 
             // diagonalaSecundara
             // 
+            this.diagonalaSecundara.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("diagonalaSecundara.BackgroundImage")));
+            this.diagonalaSecundara.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.diagonalaSecundara.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
             this.diagonalaSecundara.Location = new System.Drawing.Point(956, 353);
             this.diagonalaSecundara.Name = "diagonalaSecundara";
@@ -150,6 +163,8 @@
             // 
             // NSEV
             // 
+            this.NSEV.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("NSEV.BackgroundImage")));
+            this.NSEV.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.NSEV.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
             this.NSEV.Location = new System.Drawing.Point(718, 399);
             this.NSEV.Name = "NSEV";
@@ -159,11 +174,76 @@
             this.NSEV.UseVisualStyleBackColor = true;
             this.NSEV.Click += new System.EventHandler(this.NSEV_Click);
             // 
+            // romb
+            // 
+            this.romb.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("romb.BackgroundImage")));
+            this.romb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.romb.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.romb.Location = new System.Drawing.Point(956, 399);
+            this.romb.Name = "romb";
+            this.romb.Size = new System.Drawing.Size(200, 40);
+            this.romb.TabIndex = 11;
+            this.romb.Text = "Romb";
+            this.romb.UseVisualStyleBackColor = true;
+            // 
+            // diagonale
+            // 
+            this.diagonale.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("diagonale.BackgroundImage")));
+            this.diagonale.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.diagonale.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.diagonale.Location = new System.Drawing.Point(718, 445);
+            this.diagonale.Name = "diagonale";
+            this.diagonale.Size = new System.Drawing.Size(200, 40);
+            this.diagonale.TabIndex = 12;
+            this.diagonale.Text = "+ x Diagonale";
+            this.diagonale.UseVisualStyleBackColor = true;
+            // 
+            // tricolor
+            // 
+            this.tricolor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tricolor.BackgroundImage")));
+            this.tricolor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tricolor.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.tricolor.Location = new System.Drawing.Point(956, 445);
+            this.tricolor.Name = "tricolor";
+            this.tricolor.Size = new System.Drawing.Size(200, 40);
+            this.tricolor.TabIndex = 13;
+            this.tricolor.Text = "Tricolor";
+            this.tricolor.UseVisualStyleBackColor = true;
+            // 
+            // serpuit
+            // 
+            this.serpuit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("serpuit.BackgroundImage")));
+            this.serpuit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.serpuit.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.serpuit.Location = new System.Drawing.Point(718, 491);
+            this.serpuit.Name = "serpuit";
+            this.serpuit.Size = new System.Drawing.Size(200, 40);
+            this.serpuit.TabIndex = 14;
+            this.serpuit.Text = "Serpuit";
+            this.serpuit.UseVisualStyleBackColor = true;
+            // 
+            // picaturi
+            // 
+            this.picaturi.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picaturi.BackgroundImage")));
+            this.picaturi.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picaturi.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.picaturi.Location = new System.Drawing.Point(956, 491);
+            this.picaturi.Name = "picaturi";
+            this.picaturi.Size = new System.Drawing.Size(200, 40);
+            this.picaturi.TabIndex = 15;
+            this.picaturi.Text = "Picaturi de apa";
+            this.picaturi.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 720);
+            this.Controls.Add(this.picaturi);
+            this.Controls.Add(this.serpuit);
+            this.Controls.Add(this.tricolor);
+            this.Controls.Add(this.diagonale);
+            this.Controls.Add(this.romb);
             this.Controls.Add(this.NSEV);
             this.Controls.Add(this.diagonalaSecundara);
             this.Controls.Add(this.diagonalaPrincipala);
@@ -196,6 +276,11 @@
         private System.Windows.Forms.Button diagonalaPrincipala;
         private System.Windows.Forms.Button diagonalaSecundara;
         private System.Windows.Forms.Button NSEV;
+        private System.Windows.Forms.Button romb;
+        private System.Windows.Forms.Button diagonale;
+        private System.Windows.Forms.Button tricolor;
+        private System.Windows.Forms.Button serpuit;
+        private System.Windows.Forms.Button picaturi;
     }
 }
 

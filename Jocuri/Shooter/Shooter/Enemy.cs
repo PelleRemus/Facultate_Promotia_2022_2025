@@ -4,27 +4,29 @@ using System.Windows.Forms;
 
 namespace Shooter
 {
-    public class Enemy
+    // abstractizare: clasa Enemy este abstracta prin cuvantul cheie 'abstract'
+    // nu mai avem voie sa scriem: new Enemy(...) -> eroare de compilare
+    public abstract class Enemy
     {
-        public int health, speed;
+        public int health, speed, spawnTime;
         // avem nevoie de aceste valori pentru a nu creste inamicul prea repede cand se apropie de ecran
         public double sizeX, sizeY;
 
         public PictureBox pictureBox;
 
-        public Enemy(int health, int speed, int sizeX, int sizeY)
+        public Enemy(int health, int speed, int sizeX, int sizeY, Color color, int spawnTime)
         {
             this.health = health;
             this.speed = speed;
             this.sizeX = sizeX;
             this.sizeY = sizeY;
+            this.spawnTime = spawnTime;
 
             pictureBox = new PictureBox();
-            pictureBox.Parent = Engine.form.pictureBox1;
             pictureBox.Size = new Size(sizeX, sizeY);
             pictureBox.Location = Engine.GetRandomPoint(sizeX, sizeY);
 
-            pictureBox.BackColor = Color.Crimson;
+            pictureBox.BackColor = color;
             pictureBox.Click += PictureBox_Click;
         }
 
@@ -42,7 +44,7 @@ namespace Shooter
         // inamicii se misca simplu, pozitia lor pe axa Oy creste cu viteza lor
         // in schimb, pe cum se apropie de ecran, acesta trebuie sa creasca. Pentru a nu creste prea repede,
         // vom creste valorile lui sizeX si sizeY doar cu un numar mai mic decat 1 de fiecare data
-        public void Move()
+        public virtual void Move()
         {
             int x = pictureBox.Location.X;
             int y = pictureBox.Location.Y + speed;

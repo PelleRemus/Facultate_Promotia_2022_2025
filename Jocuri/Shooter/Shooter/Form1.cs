@@ -31,7 +31,7 @@ namespace Shooter
         // folosind un timer, putem spune aplicatiei ce sa faca la fiecare "secunda" din joc
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Engine.MoveEnemies();
+            Engine.Tick();
         }
     }
 }
