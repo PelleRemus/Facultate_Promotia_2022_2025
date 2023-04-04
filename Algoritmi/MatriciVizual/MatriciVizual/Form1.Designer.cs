@@ -33,10 +33,13 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.chenar = new System.Windows.Forms.Button();
+            this.spirala = new System.Windows.Forms.Button();
             this.display = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.diagonalaPrincipala = new System.Windows.Forms.Button();
+            this.diagonalaSecundara = new System.Windows.Forms.Button();
+            this.NSEV = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +58,7 @@
             this.textBox1.Location = new System.Drawing.Point(718, 44);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(441, 412);
+            this.textBox1.Size = new System.Drawing.Size(441, 228);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
@@ -73,31 +76,33 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(718, 459);
+            this.label2.Location = new System.Drawing.Point(718, 275);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(441, 29);
             this.label2.TabIndex = 3;
             this.label2.Text = "Or choose one of the following algorythms:";
             // 
-            // button1
+            // chenar
             // 
-            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(718, 491);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(200, 40);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Chenar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.chenar.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.chenar.Location = new System.Drawing.Point(718, 307);
+            this.chenar.Name = "chenar";
+            this.chenar.Size = new System.Drawing.Size(200, 40);
+            this.chenar.TabIndex = 4;
+            this.chenar.Text = "Chenar";
+            this.chenar.UseVisualStyleBackColor = true;
+            this.chenar.Click += new System.EventHandler(this.chenar_Click);
             // 
-            // button2
+            // spirala
             // 
-            this.button2.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
-            this.button2.Location = new System.Drawing.Point(956, 491);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(200, 40);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Spirala";
-            this.button2.UseVisualStyleBackColor = true;
+            this.spirala.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.spirala.Location = new System.Drawing.Point(956, 307);
+            this.spirala.Name = "spirala";
+            this.spirala.Size = new System.Drawing.Size(200, 40);
+            this.spirala.TabIndex = 5;
+            this.spirala.Text = "Spirala";
+            this.spirala.UseVisualStyleBackColor = true;
+            this.spirala.Click += new System.EventHandler(this.spirala_Click);
             // 
             // display
             // 
@@ -121,15 +126,51 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Choose the colors for the display:";
             // 
+            // diagonalaPrincipala
+            // 
+            this.diagonalaPrincipala.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.diagonalaPrincipala.Location = new System.Drawing.Point(718, 353);
+            this.diagonalaPrincipala.Name = "diagonalaPrincipala";
+            this.diagonalaPrincipala.Size = new System.Drawing.Size(200, 40);
+            this.diagonalaPrincipala.TabIndex = 8;
+            this.diagonalaPrincipala.Text = "\\ Principala";
+            this.diagonalaPrincipala.UseVisualStyleBackColor = true;
+            this.diagonalaPrincipala.Click += new System.EventHandler(this.diagonalaPrincipala_Click);
+            // 
+            // diagonalaSecundara
+            // 
+            this.diagonalaSecundara.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.diagonalaSecundara.Location = new System.Drawing.Point(956, 353);
+            this.diagonalaSecundara.Name = "diagonalaSecundara";
+            this.diagonalaSecundara.Size = new System.Drawing.Size(200, 40);
+            this.diagonalaSecundara.TabIndex = 9;
+            this.diagonalaSecundara.Text = "/ Secundara";
+            this.diagonalaSecundara.UseVisualStyleBackColor = true;
+            this.diagonalaSecundara.Click += new System.EventHandler(this.diagonalaSecundara_Click);
+            // 
+            // NSEV
+            // 
+            this.NSEV.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold);
+            this.NSEV.Location = new System.Drawing.Point(718, 399);
+            this.NSEV.Name = "NSEV";
+            this.NSEV.Size = new System.Drawing.Size(200, 40);
+            this.NSEV.TabIndex = 10;
+            this.NSEV.Text = "NSEV";
+            this.NSEV.UseVisualStyleBackColor = true;
+            this.NSEV.Click += new System.EventHandler(this.NSEV_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 720);
+            this.Controls.Add(this.NSEV);
+            this.Controls.Add(this.diagonalaSecundara);
+            this.Controls.Add(this.diagonalaPrincipala);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.display);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.spirala);
+            this.Controls.Add(this.chenar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
@@ -148,10 +189,13 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button chenar;
+        private System.Windows.Forms.Button spirala;
         private System.Windows.Forms.Button display;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button diagonalaPrincipala;
+        private System.Windows.Forms.Button diagonalaSecundara;
+        private System.Windows.Forms.Button NSEV;
     }
 }
 
