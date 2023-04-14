@@ -185,6 +185,7 @@
             this.romb.TabIndex = 11;
             this.romb.Text = "Romb";
             this.romb.UseVisualStyleBackColor = true;
+            this.romb.Click += new System.EventHandler(this.romb_Click);
             // 
             // diagonale
             // 
@@ -197,6 +198,7 @@
             this.diagonale.TabIndex = 12;
             this.diagonale.Text = "+ x Diagonale";
             this.diagonale.UseVisualStyleBackColor = true;
+            this.diagonale.Click += new System.EventHandler(this.diagonale_Click);
             // 
             // tricolor
             // 
@@ -209,6 +211,7 @@
             this.tricolor.TabIndex = 13;
             this.tricolor.Text = "Tricolor";
             this.tricolor.UseVisualStyleBackColor = true;
+            this.tricolor.Click += new System.EventHandler(this.tricolor_Click);
             // 
             // serpuit
             // 
@@ -221,6 +224,7 @@
             this.serpuit.TabIndex = 14;
             this.serpuit.Text = "Serpuit";
             this.serpuit.UseVisualStyleBackColor = true;
+            this.serpuit.Click += new System.EventHandler(this.serpuit_Click);
             // 
             // picaturi
             // 
@@ -233,6 +237,7 @@
             this.picaturi.TabIndex = 15;
             this.picaturi.Text = "Picaturi de apa";
             this.picaturi.UseVisualStyleBackColor = true;
+            this.picaturi.Click += new System.EventHandler(this.picaturi_Click);
             // 
             // Form1
             // 
