@@ -11,7 +11,10 @@ namespace Partial
         {
             // Ex1();
             // Ex2();
-            Ex3R1();
+            //Ex3R1();
+            Console.WriteLine(Ex3R2(
+                new int[] { 1, 2, 3, 4, 5, 6, 6 },
+                new int[] { 2, 3, 3, 4, 4, 4, 3 }));
             Console.ReadKey();
         }
 
@@ -121,6 +124,50 @@ namespace Partial
             for (int i = 0; i < agentsData.Count; i++)
                 writer.WriteLine(agentsData[i]);
             writer.Close();
+        }
+
+        static int Ex3R2(int[] v, int[] u)
+        {
+            int[] putereV = Putere(v);
+            int[] putereU = Putere(u);
+
+            int min = Math.Min(putereV.Length, putereU.Length);
+            for (int i = 0; i < min; i++)
+            {
+                if (putereU[i] < putereV[i])
+                    return -1;
+                if (putereU[i] > putereV[i])
+                    return 1;
+            }
+
+            return 0;
+        }
+
+        static int[] Putere(int[] v)
+        {
+            int max = 0;
+            for (int i = 0; i < v.Length; i++)
+                if (max < v[i])
+                    max = v[i];
+
+            int[] frecventa = new int[max + 1];
+            for (int i = 0; i < v.Length; i++)
+            {
+                frecventa[v[i]]++;
+            }
+
+            for (int j = 1; j <= max; j++)
+                for (int i = j; i > 0; i--)
+                {
+                    if (frecventa[i] > frecventa[i-1])
+                    {
+                        // (frecventa[i], frecventa[i - 1]) = (frecventa[i - 1], frecventa[i]);
+                        int aux = frecventa[i];
+                        frecventa[i] = frecventa[i - 1];
+                        frecventa[i-1] = aux;
+                    }
+                }
+            return frecventa;
         }
 
         static string[] ReadFromFile(string filename)
