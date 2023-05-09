@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from '../product';
+import { ProductsService } from '../services/products.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -7,10 +9,22 @@ import { Product } from '../product';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
-  product: Product = {
-    imageUrl: "https://restaumatic-production.imgix.net/uploads/accounts/34267/media_library/1e6cb911-1aa4-4a01-b9d0-07c3a8478c4c.jpg?auto=compress&blur=0&crop=focalpoint&fit=max&fp-x=0.5&fp-y=0.5&h=auto&rect=0%2C0%2C1024%2C683&w=600",
-    name: "Salată Vital",
-    description: "150 g (ţelină, sfeclă roşie, hrean, ulei presat la rece, sare, lămâie)",
-    price: 10
-  } as Product;
+
+  products: Product[] = [];
+  
+  // parametrii din constructor, in Angular, primesc valoare o singura data la inceputul executarii aplicatiei
+  // si sunt "injectati" direct in constructor, prin Dependency Injection (DI): https://angular.io/guide/dependency-injection
+  constructor(private productsService: ProductsService, private router: Router) {
+    // folosind subscribe, "asteptam" sa primim datele din Observable, acestea fiind returnate in res.
+    productsService.getProductList().subscribe(res => {
+      this.products = res;
+    });
+  }
+
+  // obiectul router se ocupa de navigarea in pagina. Poate primi o lista de parametri,
+  // acestea reprezentand intreaga cale ce va forma url-ul final. Ruta rezultata din codul de mai jos
+  // pentru id-ul 5 va fi "/product/5".
+  navigateToProduct(id: number) {
+    this.router.navigate(['product', id]);
+  }
 }

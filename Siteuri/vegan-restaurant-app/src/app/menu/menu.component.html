@@ -1,12 +1,24 @@
 <div class="container">
     <h1 class="text-center py-3">Menu</h1>
 
+    <!-- Un div care cuprinde mai multe elemente cu proprietati de flex este folosit pentru asezarea in pagina -->
+    <!-- Un site care explica bine proprietatile flex-ului intr-un mod interactiv (printr-un mic joc) -->
+    <!-- Exte https://flexboxfroggy.com/. Alternativa flex-ului este proprietatea grid: https://cssgridgarden.com/ -->
     <div class="d-flex justify-content-between flex-wrap">
-        <div class="card" style="width: 14rem;">
+        <!-- Inspiratie: https://getbootstrap.com/docs/4.0/components/card/ -->
+        <!-- *ngFor este, de asemenea, oferit de Angular, si este o modalitate de a scrie for in HTML. -->
+        <!-- O alternativa pentru routerLink este codul scris chiar de noi: la click, se apeleaza functia navigateToProduct. -->
+        <div class="card mb-3" style="width: 14rem" *ngFor="let product of products"
+                (click)="navigateToProduct(product.id)">
+            <!-- Cand dorim sa folosim variabile din typescript, folosim interpolare, adica un set dublu de acolade: {{}} -->
             <img class="card-img-top" src="{{product.imageUrl}}">
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card-footer">
+                <!-- Daca dorim sa afisam valorile din typescript intr-un mod diferit, folosim un Pipe -->
+                <!-- Aici folosim un DecimalPipe: https://angular.io/api/common/DecimalPipe -->
                 <a href="#" class="btn btn-primary">{{product.price | number: '1.2-2' }} RON</a>
             </div>
         </div>
