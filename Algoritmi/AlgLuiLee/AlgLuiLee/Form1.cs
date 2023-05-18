@@ -19,12 +19,14 @@ namespace AlgLuiLee
         {
             matrix = new int[n, m];
             display = new MapTile[n, m];
+            // cele doua dimensiuni ale fiecarui picturebox
             int sizeHeight = Height / n;
             int sizeWidth = Width / m;
 
             for(int i = 0; i < n; i++) 
                 for (int j = 0; j < m; j++)
                 {
+                    // initializarea clasica a unui picturebox, pe care am mai facut-o inainte
                     PictureBox pictureBox = new PictureBox();
                     pictureBox.Parent = this;
                     pictureBox.Size = new Size(sizeWidth, sizeHeight);
@@ -32,6 +34,7 @@ namespace AlgLuiLee
                     pictureBox.Location = new Point(j * sizeWidth, i * sizeHeight);
                     pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
+                    // apelam constructorul care creeaza si un picturebox
                     display[i, j] = new MapTile(i, j, pictureBox);
                 }
 
