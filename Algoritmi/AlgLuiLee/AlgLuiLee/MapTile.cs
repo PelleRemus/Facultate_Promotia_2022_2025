@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace AlgLuiLee
@@ -23,7 +24,8 @@ namespace AlgLuiLee
 
         private void PictureBox_Click(object sender, EventArgs e)
         {
-            Player.ChangeDestination(this);
+            if (pictureBox.BackColor == Color.ForestGreen)
+                Player.ChangeDestination(this);
         }
     }
 }

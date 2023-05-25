@@ -6,7 +6,7 @@
         public int length;
 
         // coada are proprietatile ca se adauga la final si se iese de la inceput
-        public Queue() 
+        public Queue()
         {
             v = new MapTile[0];
             length = 0;
@@ -16,7 +16,7 @@
         {
             length++;
             MapTile[] newV = new MapTile[length];
-            for(int i=0; i< length - 1; i++)
+            for (int i = 0; i < length - 1; i++)
             {
                 newV[i] = v[i];
             }
@@ -28,7 +28,7 @@
         {
             length--;
             MapTile[] newV = new MapTile[length];
-            for(int i=0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 newV[i] = v[i + 1];
             }

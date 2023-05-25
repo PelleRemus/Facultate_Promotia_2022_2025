@@ -43,7 +43,7 @@ namespace AlgLuiLee
 
             // reinitializam matricea pentru a incepe din nou de la 0
             // ca apoi sa putem apela din nou algoritmul lui Lee si acesta sa functioneze
-            form.matrix = new int[form.n, form.m];
+            form.InitializeMatrixWithWalls();
             FindPathLee();
         }
 
@@ -68,11 +68,11 @@ namespace AlgLuiLee
             form.matrix[destinationPosition.Y, destinationPosition.X] = 1;
 
             // aici cream matricea cu toate drumurile posibile spre destinatie
-            while(coada.length > 0)
+            while (coada.length > 0)
             {
                 MapTile crnt = coada.Remove();
                 // stanga
-                if(crnt.column > 0 && form.matrix[crnt.line, crnt.column - 1] == 0)
+                if (crnt.column > 0 && form.matrix[crnt.line, crnt.column - 1] == 0)
                 {
                     coada.Add(new MapTile(crnt.line, crnt.column - 1, crnt.value + 1));
                     form.matrix[crnt.line, crnt.column - 1] = crnt.value + 1;

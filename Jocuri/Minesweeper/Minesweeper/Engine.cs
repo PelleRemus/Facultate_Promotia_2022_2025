@@ -28,8 +28,8 @@ namespace Minesweeper
             // intai initializam matricea, apoi apelam constructorul fiecarui element din matrice pentru initializarea acestora
             // de data asta, vom construi butonul in constructor, in clasa Tile
             buttons = new Tile[10, 10];
-            for(int i = 0; i < lines; i++) 
-                for(int j = 0; j < lines; j++)
+            for (int i = 0; i < lines; i++)
+                for (int j = 0; j < lines; j++)
                 {
                     buttons[i, j] = new Tile(i, j);
                 }
@@ -41,13 +41,14 @@ namespace Minesweeper
         {
             // vom crea cate mine dorim. Parcurgem numarul de mine cu un for
             int numberOfMines = 15;
-            for(int mine = 0; mine < numberOfMines; mine++)
+            for (int mine = 0; mine < numberOfMines; mine++)
             {
                 // pentru fiecare mina, alegem la intamplare linia si coloana pe care dorim sa se afle
                 // cu toate acestea, dorim sa nu se suprapuna cu o alta mina existenta, deci tot alegem valori la intamplare
                 // cat timp valoarea de pe tile este 9
                 int i, j;
-                do {
+                do
+                {
                     i = random.Next(lines);
                     j = random.Next(lines);
                 } while (buttons[i, j].value == 9);
@@ -109,10 +110,10 @@ namespace Minesweeper
         public static bool CheckIfYouWin()
         {
             // am castigat daca toate minele sunt flagged, si in acelasi timp niciun alt buton nu este flagged
-            for(int i = 0; i < lines; i++)
-                for(int j = 0; j < lines; j++)
+            for (int i = 0; i < lines; i++)
+                for (int j = 0; j < lines; j++)
                 {
-                    if ((buttons[i,j].value == 9 && !buttons[i, j].isFlagged)
+                    if ((buttons[i, j].value == 9 && !buttons[i, j].isFlagged)
                         || buttons[i, j].value != 9 && buttons[i, j].isFlagged)
                         return false;
                 }
