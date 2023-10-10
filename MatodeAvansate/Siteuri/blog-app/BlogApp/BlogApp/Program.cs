@@ -14,8 +14,10 @@ namespace BlogApp
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
             // Add services to the container.
-            builder.Services.AddScoped<IArticlesService, ArticlesService>();
             builder.Services.AddScoped<IArticlesRepository, ArticlesRepository>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+            builder.Services.AddScoped<IArticlesService, ArticlesService>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
