@@ -1,4 +1,6 @@
-﻿using BlogApp.Controllers;
+﻿using BlogApp.Repositories;
+using BlogApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp
 {
@@ -8,7 +10,12 @@ namespace BlogApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+
             // Add services to the container.
+            builder.Services.AddScoped<IArticlesService, ArticlesService>();
+            builder.Services.AddScoped<IArticlesRepository, ArticlesRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

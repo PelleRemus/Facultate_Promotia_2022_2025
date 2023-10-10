@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\remus\\Documents\\GitHub\\AlgoritmiFundamentali_2023\\MatodeAvansate\\siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj": {}
+    "C:\\Users\\remus\\Documents\\GitHub\\Facultate_2023\\MatodeAvansate\\Siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\remus\\Documents\\GitHub\\AlgoritmiFundamentali_2023\\MatodeAvansate\\siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj": {
+    "C:\\Users\\remus\\Documents\\GitHub\\Facultate_2023\\MatodeAvansate\\Siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\remus\\Documents\\GitHub\\AlgoritmiFundamentali_2023\\MatodeAvansate\\siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj",
+        "projectUniqueName": "C:\\Users\\remus\\Documents\\GitHub\\Facultate_2023\\MatodeAvansate\\Siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj",
         "projectName": "BlogApp",
-        "projectPath": "C:\\Users\\remus\\Documents\\GitHub\\AlgoritmiFundamentali_2023\\MatodeAvansate\\siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj",
+        "projectPath": "C:\\Users\\remus\\Documents\\GitHub\\Facultate_2023\\MatodeAvansate\\Siteuri\\blog-app\\BlogApp\\BlogApp\\BlogApp.csproj",
         "packagesPath": "C:\\Users\\remus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\remus\\Documents\\GitHub\\AlgoritmiFundamentali_2023\\MatodeAvansate\\siteuri\\blog-app\\BlogApp\\BlogApp\\obj\\",
+        "outputPath": "C:\\Users\\remus\\Documents\\GitHub\\Facultate_2023\\MatodeAvansate\\Siteuri\\blog-app\\BlogApp\\BlogApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -47,6 +47,16 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.12, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.12, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

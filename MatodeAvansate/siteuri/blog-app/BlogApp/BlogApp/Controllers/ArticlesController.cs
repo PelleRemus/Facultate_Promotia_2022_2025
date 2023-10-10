@@ -1,4 +1,5 @@
 ﻿using BlogApp.Models;
+using BlogApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApp.Controllers
@@ -7,49 +8,45 @@ namespace BlogApp.Controllers
     [Route("/api/[controller]")]
     public class ArticlesController : ControllerBase
     {
-        public static List<Article> articles = new List<Article>
+        private readonly IArticlesService _articlesService;
+
+        public ArticlesController(IArticlesService articlesService)
         {
-            new Article { Id = 1, AuthorId = 1, Title = "My Article", Content = "very creative content" }
-        };
+            _articlesService = articlesService;
+        }
 
         [HttpGet]
         public ActionResult GetAllArticles()
         {
+            var articles = _articlesService.GetAllArticles();
             return new OkObjectResult(articles);
         }
 
         [HttpGet("{id}")]
         public ActionResult GetArticle(int id)
         {
-            return new OkObjectResult(articles.FirstOrDefault(article => article.Id == id));
+            var article = _articlesService.GetArticle(id);
+            return new OkObjectResult(article);
         }
 
         [HttpPost]
         public ActionResult PostArticle([FromBody] Article article)
         {
-            articles.Add(article);
-            return new OkObjectResult(article);
+            var dbArticle = _articlesService.PostArticle(article);
+            return new OkObjectResult(dbArticle);
         }
 
         [HttpPut("{id}")]
         public ActionResult EditArticle(int id, [FromBody] Article article)
         {
-            Article dbArticle = articles.FirstOrDefault(article => article.Id == id);
-
-            if (dbArticle != null)
-            {
-                dbArticle.Title = article.Title;
-                dbArticle.Content = article.Content;
-            }
-
+            _articlesService.EditArticle(id, article);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteArticle(int id)
         {
-            Article dbArticle = articles.FirstOrDefault(article => article.Id == id);
-            articles.Remove(dbArticle);
+            Article dbArticle = _articlesService.DeleteArticle(id);
             return new OkObjectResult(dbArticle);
         }
     }
