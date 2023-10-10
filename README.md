@@ -1,1 +1,0 @@
-# Facultate_2023
