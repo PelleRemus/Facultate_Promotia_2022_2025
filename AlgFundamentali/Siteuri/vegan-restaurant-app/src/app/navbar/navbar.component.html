@@ -1,0 +1,31 @@
+<!-- Inspiratie: https://getbootstrap.com/docs/4.0/components/navbar/ -->
+<!-- Majoritatea claselor de aici sunt clase existente implicite din bootstrap -->
+<!-- Pentru a va obisjui ce clase ar trebui sa folositi, inainte sa scrieti cod CSS (sau SCSS) -->
+<!-- Cautati pe Google "bootstrap (property)", de exemplu pentru margini, ati cauta "bootatrap margins" -->
+<!-- Si ati observa optiunile implicite pe care vi le ofera bootstrap inainte sa lucrati de la 0, poate ineficient -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark px-5">
+    <!-- routerLink face ca, atunci cand dam click pe acel element, sa navigam pe pagina specificata intre ghilimele -->
+    <!-- Acea ruta trebuie sa existe in app-routing.module.ts, altfel vom avea erori in consola -->
+    <!-- Toate imaginile din aplicatie care sunt neschimbabile, sunt adaugate in folderul de assets (folder la acelasi nivel cu folderul src) -->
+    <!-- Iar acestea sunt incarcate direct impreuna cu restul aplicatiei, si pot fi accesate direct folosind "assets/" in fata numelui imaginii -->
+    <a class="navbar-brand" routerLink="/home">
+        <img src="assets/logo.png" width="100px">
+    </a>
+    <!-- Acest buton apare numai cand ecranul este suficient de mic (deci pe ecranele telefoanelor, in general) -->
+    <!-- Si este mai ales folositor in cazul navbar-urilor cu multe optiuni. Acestea sunt ascunse si apar doar la apasarea butonului. -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- "ul" vine de la unordered list, iar "li" vine de la list item. -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link text-right" routerLinkActive="active" routerLink="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-right" routerLinkActive="active" routerLink="/menu">Menu</a>
+            </li>
+        </ul>
+    </div>
+</nav>
