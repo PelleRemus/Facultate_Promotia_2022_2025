@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TurnurileLuiHanoi
@@ -43,7 +45,10 @@ namespace TurnurileLuiHanoi
 
         public static void Deselect()
         {
-            selectedDisk.Display.BorderStyle = BorderStyle.None;
+            if (selectedDisk != null)
+            {
+                selectedDisk.Display.BorderStyle = BorderStyle.None;
+            }
             selectedDisk = null;
             selectedRod = null;
             A.Display.Cursor = B.Display.Cursor = C.Display.Cursor = Cursors.Arrow;
@@ -60,6 +65,21 @@ namespace TurnurileLuiHanoi
 
                 Deselect();
                 CheckIfYouWin();
+            }
+        }
+
+        public static async Task SolveRecursive(int n, Rod from, Rod middle, Rod to)
+        {
+            if (n == 1)
+            {
+                Move(from, to);
+                await Task.Delay(300);
+            }
+            else
+            {
+                await SolveRecursive(n - 1, from, to, middle);
+                await SolveRecursive(1, from, middle, to);
+                await SolveRecursive(n - 1, middle, from, to);
             }
         }
 

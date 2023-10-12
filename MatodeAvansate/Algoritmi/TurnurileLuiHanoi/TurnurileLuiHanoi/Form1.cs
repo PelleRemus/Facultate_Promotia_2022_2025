@@ -34,9 +34,9 @@ namespace TurnurileLuiHanoi
             MinimumMoves.Text = "Minimum Moves: " + (Math.Pow(2, nrOfDisks) - 1);
         }
 
-        private void Solve_Click(object sender, EventArgs e)
+        private async void Solve_Click(object sender, EventArgs e)
         {
-
+            await Engine.SolveRecursive((int)NrOfDisks.Value, Engine.A, Engine.B, Engine.C);
         }
     }
 }
