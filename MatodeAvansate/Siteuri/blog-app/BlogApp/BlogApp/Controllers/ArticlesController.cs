@@ -1,5 +1,6 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApp.Controllers
@@ -18,36 +19,98 @@ namespace BlogApp.Controllers
         [HttpGet]
         public ActionResult GetAllArticles()
         {
-            var articles = _articlesService.GetAllArticles();
-            return new OkObjectResult(articles);
+            try
+            {
+                var articles = _articlesService.GetAllArticles();
+                return new OkObjectResult(articles);
+            }
+            catch
+            {
+                return new ObjectResult("Something went wrong!")
+                {
+                    StatusCode = 500
+                };
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult GetArticle(int id)
         {
-            var article = _articlesService.GetArticle(id);
-            return new OkObjectResult(article);
+            try
+            {
+                var article = _articlesService.GetArticle(id);
+                return new OkObjectResult(article);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return new NotFoundObjectResult(ex.Message);
+            }
+            catch
+            {
+                return new ObjectResult("Something went wrong!")
+                {
+                    StatusCode = 500
+                };
+            }
         }
 
         [HttpPost]
         public ActionResult PostArticle([FromBody] Article article)
         {
-            var dbArticle = _articlesService.PostArticle(article);
-            return new OkObjectResult(dbArticle);
+            try
+            {
+                var dbArticle = _articlesService.PostArticle(article);
+                return new OkObjectResult(dbArticle);
+            }
+            catch
+            {
+                return new ObjectResult("Something went wrong!")
+                {
+                    StatusCode = 500
+                };
+            }
         }
 
         [HttpPut("{id}")]
         public ActionResult EditArticle(int id, [FromBody] Article article)
         {
-            _articlesService.EditArticle(id, article);
-            return new NoContentResult();
+            try
+            {
+                _articlesService.EditArticle(id, article);
+                return new NoContentResult();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return new NotFoundObjectResult(ex.Message);
+            }
+            catch
+            {
+                return new ObjectResult("Something went wrong!")
+                {
+                    StatusCode = 500
+                };
+            }
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteArticle(int id)
         {
-            Article dbArticle = _articlesService.DeleteArticle(id);
-            return new OkObjectResult(dbArticle);
+            try
+            {
+                Article dbArticle = _articlesService.DeleteArticle(id);
+                return new OkObjectResult(dbArticle);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return new NotFoundObjectResult(ex.Message);
+            }
+            catch
+            {
+                return new ObjectResult("Something went wrong!")
+                {
+                    StatusCode = 500
+                };
+            }
         }
     }
 }

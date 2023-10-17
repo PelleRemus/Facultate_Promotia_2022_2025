@@ -18,7 +18,10 @@ namespace BlogApp.Repositories
 
         public Article GetArticle(int id)
         {
-            return _dbContext.Articles.First(article => article.Id == id);
+            var article = _dbContext.Articles.FirstOrDefault(article => article.Id == id);
+            if (article == null)
+                throw new KeyNotFoundException($"Can not find article with id {id}");
+            return article;
         }
 
         public Article PostArticle(Article article)
@@ -30,19 +33,24 @@ namespace BlogApp.Repositories
 
         public void EditArticle(int id, Article article)
         {
-            var dbArticle = _dbContext.Articles.First(article => article.Id == id);
+            var dbArticle = _dbContext.Articles.FirstOrDefault(article => article.Id == id);
 
-            if (dbArticle != null)
-            {
-                dbArticle.Title = article.Title;
-                dbArticle.Content = article.Content;
-            }
+            if (dbArticle == null)
+                throw new KeyNotFoundException($"Can not find article with id {id}");
+
+            dbArticle.Title = article.Title;
+            dbArticle.Content = article.Content;
+
             _dbContext.SaveChanges();
         }
 
         public Article DeleteArticle(int id)
         {
-            var dbArticle = _dbContext.Articles.First(article => article.Id == id);
+            var dbArticle = _dbContext.Articles.FirstOrDefault(article => article.Id == id);
+
+            if (dbArticle == null)
+                throw new KeyNotFoundException($"Can not find article with id {id}");
+
             _dbContext.Articles.Remove(dbArticle);
             _dbContext.SaveChanges();
             return dbArticle;
