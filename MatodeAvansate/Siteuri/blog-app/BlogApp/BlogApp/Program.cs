@@ -11,6 +11,8 @@ namespace BlogApp
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<DatabaseContext>(options =>
+            // Daca nu va merge SQL Server
+            //    options.UseInMemoryDatabase("blogDatabase"));
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
             // Add services to the container.
