@@ -8,8 +8,11 @@ import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstra
 })
 export class NavbarComponent {
 	isDarkMode = true;
+	year = 0;
 
-	constructor(private offcanvasService: NgbOffcanvas) {}
+	constructor(private offcanvasService: NgbOffcanvas) {
+		this.year = new Date().getFullYear();
+	}
 
 	open(content: any) {
 		this.offcanvasService.open(content).result.then();

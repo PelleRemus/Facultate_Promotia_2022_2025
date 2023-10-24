@@ -17,13 +17,13 @@
     </ul>
     
     <div class="text-light">
-      <div class="d-flex align-items-center">
+      <div class="w-50 d-flex align-items-center justify-content-between">
         <label class="form-check-label">Dark Mode</label>
-        <div class="form-check form-switch ms-5">
+        <div class="form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="isDarkMode" (click)="switchDark()">
         </div>
       </div>
-      <div class="f-12 text-center">Copyright</div>
+      <div class="f-12 text-center mt-3">© Info UOradea '22-'25, {{year}}</div>
     </div>
   </nav>
 </ng-template>
