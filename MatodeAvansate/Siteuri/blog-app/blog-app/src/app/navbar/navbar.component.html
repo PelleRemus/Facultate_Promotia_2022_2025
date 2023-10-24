@@ -1,19 +1,40 @@
-<nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">  
-    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<ng-template #content let-offcanvas>
+  <nav class="navbar-dark bg-dark position-absolute h-100 w-100 p-3
+    d-flex flex-column justify-content-between">
+    <ul ngbNav class="navbar-nav">
+      <li ngbNavItem>
+        <a ngbNavLink href="#">Home</a>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink href="#">Followers</a>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink href="#">About Us</a>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink href="#">Contact Us</a>
+      </li>
+    </ul>
+    
+    <div class="text-light">
+      <div class="d-flex align-items-center">
+        <label class="form-check-label">Dark Mode</label>
+        <div class="form-check form-switch ms-5">
+          <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="isDarkMode" (click)="switchDark()">
+        </div>
+      </div>
+      <div class="f-12 text-center">Copyright</div>
+    </div>
+  </nav>
+</ng-template>
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg" ngbNav #nav="ngbNav">
+    <button ngbNavItem ngbNavLink class="btn btn-dark ms-2" type="button" (click)="open(content)">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <form class="form-inline my-2 my-lg-0 mx-auto py-2">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <form class="form-inline my-2 my-lg-0 py-2 ms-2 w-100 d-flex">
+        <input class="form-control mr-sm-2 flex-1" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success m-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
-
-<div class="collapse bg-dark" id="navbarSupportedContent">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-    </li>
-  </ul>
-</div>
-  
