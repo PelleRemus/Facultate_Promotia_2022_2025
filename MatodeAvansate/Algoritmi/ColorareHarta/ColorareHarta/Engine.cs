@@ -11,13 +11,14 @@ namespace ColorareHarta
         public static Bitmap bitmap;
         public static Graphics graphics;
 
-        public static int n;
+        public static int n, index = 0;
         public static List<Country> countries;
         public static List<Neighbours> neighbours;
         public static bool[,] mAdiacenta;
         public static List<Color> defaultColors = new List<Color> {
-            Color.Crimson, Color.GreenYellow, Color.DodgerBlue, Color.ForestGreen, Color.White, Color.Black
+            Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Indigo, Color.Violet
         };
+        public static List<List<Country>> solutions = new List<List<Country>>();
 
         public static void Init(Form1 f)
         {
@@ -27,6 +28,7 @@ namespace ColorareHarta
 
             bitmap = new Bitmap(form.pictureBox1.Width, form.pictureBox1.Height);
             graphics = Graphics.FromImage(bitmap);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         }
 
         public static void ReadFromFile(string path)
@@ -77,6 +79,56 @@ namespace ColorareHarta
                     index++;
 
                 countries[i].color = defaultColors[index];
+            }
+        }
+
+        public static void Hamiltonian()
+        {
+            List<Country> road = new List<Country>();
+            bool[] visited = new bool[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                road.Add(countries[i]);
+                visited[i] = true;
+                FindRoad(road, visited);
+
+                road.Remove(countries[i]);
+                visited[i] = false;
+            }
+        }
+
+        public static void DisplayRoad()
+        {
+            for (int i = 0; i < solutions[index].Count; i++)
+            {
+                solutions[index][i].color = defaultColors[i % defaultColors.Count];
+            }
+            DrawMap();
+        }
+
+        public static void FindRoad(List<Country> road, bool[] visited)
+        {
+            Country current = road.Last();
+
+            for (int j = 0; j < n; j++)
+            {
+                if (mAdiacenta[current.id - 1, j] && !visited[j])
+                {
+                    road.Add(countries[j]);
+                    visited[j] = true;
+
+                    if (road.Count == n)
+                    {
+                        // pentru ciclu hamiltonian:
+                        // if (mAdiacenta[j, road.First().id - 1])
+                        solutions.Add(new List<Country>(road));
+                    }
+
+                    FindRoad(road, visited);
+                    road.Remove(countries[j]);
+                    visited[j] = false;
+                }
             }
         }
 
