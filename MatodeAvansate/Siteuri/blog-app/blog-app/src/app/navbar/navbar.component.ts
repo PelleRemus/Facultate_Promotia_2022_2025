@@ -7,7 +7,7 @@ import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstra
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-	isDarkMode = true;
+	isDarkMode = false;
 	year = 0;
 
 	constructor(private offcanvasService: NgbOffcanvas) {
