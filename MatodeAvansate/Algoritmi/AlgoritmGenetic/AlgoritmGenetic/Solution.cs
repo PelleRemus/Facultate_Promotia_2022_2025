@@ -1,37 +1,61 @@
-﻿namespace AlgoritmGenetic
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+
+namespace AlgoritmGenetic
 {
     public class Solution
     {
-        public string value;
-        public static int length = 20;
+        public List<PointF> points = new List<PointF>();
 
         public Solution()
         {
-            value = "";
-            for (int i = 0; i < length; i++)
-                value += Engine.random.Next(2).ToString();
+            for (int i = 0; i < Engine.vertices; i++)
+            {
+                float x = Engine.random.Next(Engine.form.pictureBox1.Width);
+                float y = Engine.random.Next(Engine.form.pictureBox1.Height);
+                points.Add(new PointF(x, y));
+            }
         }
 
         public Solution(Solution a, Solution b)
         {
-            value = "";
-            int middle = Engine.random.Next(1, length - 1);
-
-            for (int i = 0; i < middle; i++)
-                value += a.value[i];
-            for (int i = middle; i < length; i++)
-                value += b.value[i];
+            for (int i = 0; i < Engine.vertices; i++)
+            {
+                if (Engine.random.Next(2) == 0)
+                {
+                    points.Add(a.points[i]);
+                }
+                else
+                {
+                    points.Add(b.points[i]);
+                }
+            }
         }
 
         public float Fitness()
         {
-            float count = 0;
-            for (int i = 0; i < length; i++)
+            float error = 0;
+            for (int i = 0; i < Engine.vertices; i++)
+                for (int j = 0; j < Engine.vertices; j++)
+                {
+                    if (Engine.mAdiacenta[i, j] != 0)
+                    {
+                        float distance = Engine.Distance(points[i], points[j]);
+                        error += Math.Abs(distance - Engine.mAdiacenta[i, j]);
+                    }
+                }
+            return error;
+        }
+
+        public override string ToString()
+        {
+            string toReturn = Fitness() + " ";
+            for (int i = 0; i < Engine.vertices; i++)
             {
-                if (value[i] == '1')
-                    count++;
+                toReturn += $"({points[i].X}, {points[i].Y}) ";
             }
-            return count / length;
+            return toReturn;
         }
     }
 }

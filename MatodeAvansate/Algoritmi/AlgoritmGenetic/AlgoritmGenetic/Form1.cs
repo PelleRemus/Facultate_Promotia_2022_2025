@@ -17,7 +17,8 @@ namespace AlgoritmGenetic
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Engine.NextGeneration();
+            for (int i = 0; i < 100; i++)
+                Engine.NextGeneration();
         }
     }
 }
