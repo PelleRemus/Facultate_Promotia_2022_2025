@@ -5,11 +5,12 @@
 <div class="rounded-3 shadow px-3 py-2 mb-3 Mh-105px overflow-hidden position-relative"
     *ngFor="let article of articles">
     <div class="d-flex align-items-center">
-        <img class="rounded-circle" src="https://placehold.co/32x32" />
-        <h2 class="mb-0 ms-3">{{article.title}}</h2>
+        <img class="rounded-circle pointer" routerLink="/user/{{article.authorId}}"
+            src="https://placehold.co/32x32" />
+        <h2 class="mb-0 ms-3 pointer" routerLink="/article/{{article.id}}">{{article.title}}</h2>
     </div>
-    <div class="my-2 text-justify">
+    <div class="my-2 text-justify pointer" routerLink="/article/{{article.id}}">
         {{article.content}}
     </div>
-    <div class="position-absolute"></div>
+    <div class="position-absolute pointer" routerLink="/article/{{article.id}}"></div>
 </div>

@@ -16,4 +16,20 @@ export class ArticlesService {
   getArticles(): Observable<Article[]> {
     return this.httpClient.get<Article[]>(`${this.baseURL}${this.apiPath}`);
   }
+
+  getOneArticle(id: number): Observable<Article> {
+    return this.httpClient.get<Article>(`${this.baseURL}${this.apiPath}${id}`);
+  }
+
+  postArticle(article: Article): Observable<Article> {
+    return this.httpClient.post<Article>(`${this.baseURL}${this.apiPath}`, article);
+  }
+
+  editArticle(id: number, article: Article): Observable<any> {
+    return this.httpClient.put<any>(`${this.baseURL}${this.apiPath}${id}`, article);
+  }
+
+  deleteArticle(id: number): Observable<Article> {
+    return this.httpClient.delete<Article>(`${this.baseURL}${this.apiPath}${id}`);
+  }
 }
