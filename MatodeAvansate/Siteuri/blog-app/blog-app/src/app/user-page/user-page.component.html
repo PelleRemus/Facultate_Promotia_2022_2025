@@ -6,18 +6,18 @@
     <div class="d-flex align-items-start">
         <img class="rounded-circle" src="https://placehold.co/128x128" />
         <div class="ms-3">
-            <h2>{{user.firstName}} {{user.lastName}} ({{user.nickName}})</h2>
+            <h2>{{ user.firstName }} {{ user.lastName }} ({{ user.nickName }})</h2>
             <div class="d-flex align-items-center">
                 <i-bs name="phone-fill" class="d-flex align-items-center"></i-bs>
-                <div class="ms-1">{{user.phone}}</div>
+                <div class="ms-1">{{ user.phone }}</div>
             </div>
             <div class="d-flex align-items-center">
                 <i-bs name="envelope-fill" class="d-flex align-items-center"></i-bs>
-                <div class="ms-1">{{user.email}}</div>
+                <div class="ms-1">{{ user.email }}</div>
             </div>
             <div class="d-flex align-items-center">
                 <i-bs name="gift-fill" class="d-flex align-items-center"></i-bs>
-                <div class="ms-1">{{user.birthDate | date }}</div>
+                <div class="ms-1">{{ user.birthDate | date }}</div>
             </div>
         </div>
     </div>

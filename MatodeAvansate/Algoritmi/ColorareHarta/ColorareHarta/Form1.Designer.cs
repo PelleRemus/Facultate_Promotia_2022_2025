@@ -33,6 +33,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dfsButton = new System.Windows.Forms.Button();
+            this.bfsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,11 +89,35 @@
             this.textBox1.Text = "0";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
+            // dfsButton
+            // 
+            this.dfsButton.Font = new System.Drawing.Font("Comic Sans MS", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dfsButton.Location = new System.Drawing.Point(1021, 30);
+            this.dfsButton.Name = "dfsButton";
+            this.dfsButton.Size = new System.Drawing.Size(296, 47);
+            this.dfsButton.TabIndex = 5;
+            this.dfsButton.Text = "Parcurgere Adancime";
+            this.dfsButton.UseVisualStyleBackColor = true;
+            this.dfsButton.Click += new System.EventHandler(this.dfsButton_Click);
+            // 
+            // bfsButton
+            // 
+            this.bfsButton.Font = new System.Drawing.Font("Comic Sans MS", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bfsButton.Location = new System.Drawing.Point(1021, 83);
+            this.bfsButton.Name = "bfsButton";
+            this.bfsButton.Size = new System.Drawing.Size(296, 47);
+            this.bfsButton.TabIndex = 6;
+            this.bfsButton.Text = "Parcurgere Latime";
+            this.bfsButton.UseVisualStyleBackColor = true;
+            this.bfsButton.Click += new System.EventHandler(this.bfsButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1341, 727);
+            this.Controls.Add(this.bfsButton);
+            this.Controls.Add(this.dfsButton);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -112,6 +138,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button dfsButton;
+        private System.Windows.Forms.Button bfsButton;
     }
 }
 

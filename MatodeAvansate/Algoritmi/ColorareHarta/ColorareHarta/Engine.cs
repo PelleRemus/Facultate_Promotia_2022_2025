@@ -132,6 +132,52 @@ namespace ColorareHarta
             }
         }
 
+        public static void BreadthFirstSearch(Country start)
+        {
+            bool[] visited = new bool[n];
+            Queue<Country> queue = new Queue<Country>();
+            visited[start.id - 1] = true;
+            queue.Enqueue(start);
+
+            int color = 0;
+            while (queue.Count > 0)
+            {
+                Country current = queue.Dequeue();
+                current.color = defaultColors[color % defaultColors.Count];
+                color++;
+
+                for (int j = 0; j < n; j++)
+                    if (mAdiacenta[current.id - 1, j] && !visited[j])
+                    {
+                        Country next = countries.FirstOrDefault(country => country.id == j + 1);
+                        visited[j] = true;
+                        queue.Enqueue(next);
+                    }
+            }
+        }
+
+        public static void DepthFirstSearch(Country start)
+        {
+            bool[] visited = new bool[n];
+            DFS_Recursive(start, 0, visited);
+        }
+
+        public static void DFS_Recursive(Country current, int color, bool[] visited)
+        {
+            if (!visited[current.id - 1])
+            {
+                visited[current.id - 1] = true;
+                current.color = defaultColors[color % defaultColors.Count];
+                color++;
+                for (int j = 0; j < n; j++)
+                    if (mAdiacenta[current.id - 1, j])
+                    {
+                        Country next = countries.FirstOrDefault(country => country.id == j + 1);
+                        DFS_Recursive(next, color, visited);
+                    }
+            }
+        }
+
         public static void DrawMap()
         {
             foreach (Country country in countries)

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +8,9 @@ import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstra
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-	isDarkMode = false;
 	year = 0;
 
-	constructor(private offcanvasService: NgbOffcanvas) {
+	constructor(private offcanvasService: NgbOffcanvas, public service: GlobalService) {
 		this.year = new Date().getFullYear();
 	}
 
@@ -21,12 +21,12 @@ export class NavbarComponent {
 	switchDark() {
 		let body = document.getElementsByTagName("body")[0];
 
-		if(!this.isDarkMode) {
+		if(!this.service.isDarkMode) {
 			body.classList.add('bootstrap-dark');
 		} else {
 			body.classList.remove('bootstrap-dark')
 		}
 
-		this.isDarkMode = !this.isDarkMode;
+		this.service.isDarkMode = !this.service.isDarkMode
 	}
 }

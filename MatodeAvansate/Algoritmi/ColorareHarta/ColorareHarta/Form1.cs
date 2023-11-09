@@ -11,9 +11,13 @@ namespace ColorareHarta
             Engine.ReadFromFile("../../TextFile1.txt");
             // Engine.Coloring();
             // Engine.DrawMap();
-            Engine.Hamiltonian();
-            label1.Text = Engine.solutions.Count.ToString();
-            Engine.DisplayRoad();
+
+            // Engine.Hamiltonian();
+            // label1.Text = Engine.solutions.Count.ToString();
+            // Engine.DisplayRoad();
+
+            button1.Enabled = button2.Enabled = textBox1.Enabled = false;
+            Engine.DrawMap();
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -38,6 +42,18 @@ namespace ColorareHarta
                 textBox1.Text = Engine.index.ToString();
                 Engine.DisplayRoad();
             }
+        }
+
+        private void dfsButton_Click(object sender, System.EventArgs e)
+        {
+            Engine.DepthFirstSearch(Engine.countries[0]);
+            Engine.DrawMap();
+        }
+
+        private void bfsButton_Click(object sender, System.EventArgs e)
+        {
+            Engine.BreadthFirstSearch(Engine.countries[0]);
+            Engine.DrawMap();
         }
     }
 }

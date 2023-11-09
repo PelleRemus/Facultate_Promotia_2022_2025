@@ -12,5 +12,7 @@
     <div class="my-2 text-justify pointer" routerLink="/article/{{article.id}}">
         {{article.content}}
     </div>
-    <div class="position-absolute pointer" routerLink="/article/{{article.id}}"></div>
+    <div class="position-absolute pointer" routerLink="/article/{{article.id}}"
+        [style]="'background-image: linear-gradient(transparent, '
+            + (service.isDarkMode ? 'rgb(25, 29, 33)' : 'white') + ')'"></div>
 </div>
