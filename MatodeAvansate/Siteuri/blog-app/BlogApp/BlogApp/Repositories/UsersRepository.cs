@@ -1,4 +1,5 @@
 ﻿using BlogApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp.Repositories
 {
@@ -13,12 +14,15 @@ namespace BlogApp.Repositories
 
         public List<User> GetAllUsers()
         {
-            return _dbContext.Users.ToList();
+            return _dbContext.Users.Include(u => u.Articles).ToList();
         }
 
         public User GetUser(int id)
         {
-            var user = _dbContext.Users.FirstOrDefault(user => user.Id == id);
+            var user = _dbContext.Users
+                .Include(u => u.Articles)
+                .FirstOrDefault(user => user.Id == id);
+
             if (user == null)
                 throw new KeyNotFoundException($"Can not find user with id {id}");
             return user;

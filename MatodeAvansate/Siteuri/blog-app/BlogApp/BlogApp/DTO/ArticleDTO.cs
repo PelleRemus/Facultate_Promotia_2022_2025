@@ -1,11 +1,11 @@
-﻿namespace BlogApp.Models
+﻿namespace BlogApp.DTO
 {
-    public class Article
+    public class ArticleDTO
     {
         public int Id { get; set; }
         public int AuthorId { get; set; }
-        public User Author { get; set; } = null!;
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
     }
 }
+

@@ -1,6 +1,6 @@
-﻿namespace BlogApp.Models
+﻿namespace BlogApp.DTO
 {
-    public class User
+    public class UserDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; } = null!;
@@ -10,7 +10,5 @@
         public string Email { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public DateTime BirthDate { get; set; }
-
-        public List<Article> Articles { get; set; } = new List<Article>();
     }
 }

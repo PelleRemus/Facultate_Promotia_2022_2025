@@ -1,4 +1,5 @@
 ﻿using BlogApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp.Repositories
 {
@@ -13,12 +14,15 @@ namespace BlogApp.Repositories
 
         public List<Article> GetAllArticles()
         {
-            return _dbContext.Articles.ToList();
+            return _dbContext.Articles.Include(a => a.Author).ToList();
         }
 
         public Article GetArticle(int id)
         {
-            var article = _dbContext.Articles.FirstOrDefault(article => article.Id == id);
+            var article = _dbContext.Articles
+                .Include(a => a.Author)
+                .FirstOrDefault(article => article.Id == id);
+
             if (article == null)
                 throw new KeyNotFoundException($"Can not find article with id {id}");
             return article;

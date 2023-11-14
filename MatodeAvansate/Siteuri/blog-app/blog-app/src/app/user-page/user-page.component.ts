@@ -14,7 +14,7 @@ export class UserPageComponent {
   isLoading: boolean = true;
 
   constructor(private usersService: UsersService,
-    private service: GlobalService,
+    public service: GlobalService,
     private route: ActivatedRoute) {
     let id: number = +route.snapshot.params['id'];
 

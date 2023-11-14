@@ -5,8 +5,11 @@
 <div *ngIf="!isLoading">
     <div class="d-flex align-items-center">
         <img class="rounded-circle pointer" routerLink="/user/{{article.authorId}}"
-            src="https://placehold.co/32x32" />
-        <h2 class="mb-0 ms-3">{{article.title}}</h2>
+            src="https://placehold.co/64x64" />
+        <div class="ms-3">
+            <h2 class="mb-0">{{article.title}}</h2>
+            <h5>by {{article.author.firstName}} {{article.author.lastName}}</h5>
+        </div>
     </div>
     <div class="my-2 text-justify">
         {{article.content}}

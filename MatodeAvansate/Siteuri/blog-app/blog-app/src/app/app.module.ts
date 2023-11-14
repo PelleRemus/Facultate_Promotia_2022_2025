@@ -19,6 +19,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { UserPageComponent } from './user-page/user-page.component';
     AboutUsComponent,
     ContactUsComponent,
     ArticlePageComponent,
-    UserPageComponent
+    UserPageComponent,
+    LoginPageComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
