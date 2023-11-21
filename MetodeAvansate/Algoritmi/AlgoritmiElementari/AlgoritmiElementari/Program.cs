@@ -24,7 +24,7 @@ namespace AlgoritmiElementari
             };
             visited = new bool[n];
 
-            //Console.WriteLine(IsHamiltonian());
+            Console.WriteLine(IsHamiltonian());
             Console.ReadKey();
         }
 
@@ -35,14 +35,13 @@ namespace AlgoritmiElementari
                 visited = new bool[n];
                 List<int> noduri = new List<int>();
                 noduri.Add(i);
-                GasireDrum(noduri);
-                if (noduri.Count == n)
+                if (GasireDrum(noduri))
                     return true;
             }
             return false;
         }
 
-        static void GasireDrum(List<int> noduri)
+        static bool GasireDrum(List<int> noduri)
         {
             int nod = noduri[noduri.Count - 1];
             visited[nod] = true;
@@ -50,11 +49,19 @@ namespace AlgoritmiElementari
             for (int j = 0; j < n; j++)
                 if (matrix[nod, j] == 1 && !visited[j])
                 {
-                    visited[j] = true;
                     noduri.Add(j);
-                    GasireDrum(noduri);
-                    return;
+
+                    if (noduri.Count == n)
+                        return true;
+
+                    if (GasireDrum(noduri))
+                        return true;
+
+                    visited[j] = false;
+                    noduri.Remove(j);
                 }
+
+            return false;
         }
     }
 }
