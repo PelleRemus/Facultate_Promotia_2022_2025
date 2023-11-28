@@ -1,44 +1,44 @@
 <div class="d-flex h-100 justify-content-center align-items-center">
-    <form class="w-50 shadow p-3">
+    <form [formGroup]="form" class="w-50 shadow p-3">
         <h2 class="text-center">Register</h2>
         <div class="d-flex">
             <div class="form-group flex-1 mb-3">
                 <label for="firstNameInput">First Name</label>
-                <input class="form-control" id="firstNameInput" placeholder="Enter First Name">
+                <input class="form-control" id="firstNameInput" formControlName="firstName" placeholder="Enter First Name">
             </div>
             <div class="form-group flex-1 mb-3 ms-2">
                 <label for="lastNameInput">Last Name</label>
-                <input class="form-control" id="lastNameInput" placeholder="Enter Last Name">
+                <input class="form-control" id="lastNameInput" formControlName="lastName" placeholder="Enter Last Name">
             </div>
         </div>
         <div class="form-group mb-3">
             <label for="nickNameInput">Nick Name</label>
-            <input class="form-control" id="nickNameInput" placeholder="Enter Nick Name">
+            <input class="form-control" id="nickNameInput" formControlName="nickName" placeholder="Enter Nick Name">
         </div>
         <div class="d-flex">
             <div class="form-group flex-1 mb-3">
                 <label for="emailInput">Email address</label>
-                <input type="email" class="form-control" id="emailInput" placeholder="Enter email">
+                <input type="email" class="form-control" id="emailInput" formControlName="email" placeholder="Enter email">
             </div>
             <div class="form-group flex-1 mb-3 ms-2">
                 <label for="phoneInput">Phone Number</label>
-                <input class="form-control" id="phoneInput" placeholder="Enter Phone Number">
+                <input class="form-control" id="phoneInput" formControlName="phone" placeholder="Enter Phone Number">
             </div>
         </div>
         <div class="d-flex">
             <div class="form-group flex-1 mb-3">
                 <label for="passInput">Password</label>
-                <input type="password" class="form-control" id="passInput" placeholder="Password">
+                <input type="password" class="form-control" formControlName="password" id="passInput" placeholder="Password">
             </div>
             <div class="form-group flex-1 mb-3 ms-2">
-                <label for="passInput">Confirm Password</label>
-                <input type="password" class="form-control" id="passInput" placeholder="Confirm Password">
+                <label for="confirmPassInput">Confirm Password</label>
+                <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassInput" placeholder="Confirm Password">
             </div>
         </div>
 
         <div class="mb-3 text-center">Already have an account? <a routerLink="/login">Login</a> instead</div>
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-danger">Register</button>
+            <button type="submit" class="btn btn-danger" (click)="onSubmit()">Register</button>
         </div>
     </form>
 </div>

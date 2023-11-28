@@ -1,5 +1,8 @@
-﻿using BlogApp.Repositories;
+﻿using BlogApp.Models;
+using BlogApp.Repositories;
 using BlogApp.Services;
+using BlogApp.Validations;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp
@@ -9,6 +12,19 @@ namespace BlogApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            string policyName = "localhostPolicy";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: policyName,
+                                    policy =>
+                                    {
+                                        policy.WithOrigins("http://localhost:4200");
+                                        policy.WithMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS");
+                                        policy.WithHeaders("Access-Control-Allow-Headers", "Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers");
+                                    }
+                                 );
+            });
 
             builder.Services.AddDbContext<DatabaseContext>(options =>
             // Daca nu va merge SQL Server
@@ -20,6 +36,7 @@ namespace BlogApp
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IArticlesService, ArticlesService>();
             builder.Services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<AbstractValidator<User>, UserValidator>();
 
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -39,6 +56,7 @@ namespace BlogApp
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(policyName);
 
             app.UseAuthorization();
 

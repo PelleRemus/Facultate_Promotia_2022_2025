@@ -1,5 +1,7 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services;
+using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogApp.Controllers
@@ -9,10 +11,12 @@ namespace BlogApp.Controllers
     public class UsersController
     {
         private readonly IUsersService _usersService;
+        private readonly AbstractValidator<User> _validator;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, AbstractValidator<User> validator)
         {
             _usersService = usersService;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -58,6 +62,10 @@ namespace BlogApp.Controllers
         {
             try
             {
+                var validation = _validator.Validate(user);
+                if (!validation.IsValid)
+                    return new BadRequestObjectResult(validation.Errors.Select(error => error.ErrorMessage));
+
                 var dbUser = _usersService.PostUser(user);
                 return new OkObjectResult(dbUser);
             }
@@ -75,6 +83,10 @@ namespace BlogApp.Controllers
         {
             try
             {
+                var validation = _validator.Validate(user);
+                if (!validation.IsValid)
+                    return new BadRequestObjectResult(validation.Errors);
+
                 _usersService.EditUser(id, user);
                 return new NoContentResult();
             }

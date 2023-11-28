@@ -30,6 +30,10 @@ namespace BlogApp.Repositories
 
         public Article PostArticle(Article article)
         {
+            var user = _dbContext.Users.FirstOrDefault(user => user.Id == article.AuthorId);
+            if (user == null)
+                throw new KeyNotFoundException($"Can not find user with id {article.AuthorId}");
+
             _dbContext.Articles.Add(article);
             _dbContext.SaveChanges();
             return article;
@@ -38,9 +42,12 @@ namespace BlogApp.Repositories
         public void EditArticle(int id, Article article)
         {
             var dbArticle = _dbContext.Articles.FirstOrDefault(article => article.Id == id);
-
             if (dbArticle == null)
                 throw new KeyNotFoundException($"Can not find article with id {id}");
+
+            var user = _dbContext.Users.FirstOrDefault(user => user.Id == article.AuthorId);
+            if (user == null)
+                throw new KeyNotFoundException($"Can not find user with id {article.AuthorId}");
 
             dbArticle.Title = article.Title;
             dbArticle.Content = article.Content;

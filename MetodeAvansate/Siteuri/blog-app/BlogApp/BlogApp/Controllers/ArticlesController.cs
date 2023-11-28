@@ -62,6 +62,10 @@ namespace BlogApp.Controllers
                 var dbArticle = _articlesService.PostArticle(article);
                 return new OkObjectResult(dbArticle);
             }
+            catch (KeyNotFoundException ex)
+            {
+                return new NotFoundObjectResult(ex.Message);
+            }
             catch
             {
                 return new ObjectResult("Something went wrong!")
