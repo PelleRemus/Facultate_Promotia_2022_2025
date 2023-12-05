@@ -1,5 +1,6 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,6 +56,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult PostArticle([FromBody] Article article)
         {
             try
@@ -76,6 +78,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public ActionResult EditArticle(int id, [FromBody] Article article)
         {
             try
@@ -97,6 +100,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult DeleteArticle(int id)
         {
             try

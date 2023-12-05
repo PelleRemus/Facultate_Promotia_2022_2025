@@ -10,6 +10,7 @@
         public string Email { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public DateTime BirthDate { get; set; }
+        public string Role { get; set; } = null!;
 
         public List<Article> Articles { get; set; } = new List<Article>();
     }

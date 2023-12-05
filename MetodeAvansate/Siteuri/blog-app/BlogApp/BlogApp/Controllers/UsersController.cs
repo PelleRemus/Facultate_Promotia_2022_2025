@@ -1,6 +1,7 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,7 @@ namespace BlogApp.Controllers
 {
     [Controller]
     [Route("/api/[controller]")]
-    public class UsersController
+    public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
         private readonly AbstractValidator<User> _validator;
@@ -58,6 +59,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult PostUser([FromBody] User user)
         {
             try
@@ -79,6 +81,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public ActionResult EditUser(int id, [FromBody] User user)
         {
             try
@@ -104,6 +107,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult DeleteUser(int id)
         {
             try

@@ -3,7 +3,11 @@ using BlogApp.Repositories;
 using BlogApp.Services;
 using BlogApp.Validations;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
+using System.Text;
 
 namespace BlogApp
 {
@@ -38,6 +42,22 @@ namespace BlogApp
             builder.Services.AddScoped<IUsersService, UsersService>();
             builder.Services.AddScoped<AbstractValidator<User>, UserValidator>();
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                    };
+                });
+
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -58,6 +78,7 @@ namespace BlogApp
             app.UseHttpsRedirection();
             app.UseCors(policyName);
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
