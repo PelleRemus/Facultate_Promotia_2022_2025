@@ -12,6 +12,9 @@ export class NavbarComponent {
 
 	constructor(private offcanvasService: NgbOffcanvas, public service: GlobalService) {
 		this.year = new Date().getFullYear();
+		if(localStorage.getItem('token')) {
+			this.service.setLogIn(true);
+		}
 	}
 
 	open(content: any) {
@@ -28,5 +31,10 @@ export class NavbarComponent {
 		}
 
 		this.service.isDarkMode = !this.service.isDarkMode
+	}
+
+	logout() {
+		localStorage.removeItem('token');
+		this.service.setLogIn(false);
 	}
 }

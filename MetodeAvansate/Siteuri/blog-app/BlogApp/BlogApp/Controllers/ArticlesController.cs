@@ -1,8 +1,8 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BlogApp.Controllers
 {
@@ -59,8 +59,13 @@ namespace BlogApp.Controllers
         [Authorize]
         public ActionResult PostArticle([FromBody] Article article)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
             try
             {
+                int authorId = int.Parse(identity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+                article.AuthorId = authorId;
+
                 var dbArticle = _articlesService.PostArticle(article);
                 return new OkObjectResult(dbArticle);
             }
