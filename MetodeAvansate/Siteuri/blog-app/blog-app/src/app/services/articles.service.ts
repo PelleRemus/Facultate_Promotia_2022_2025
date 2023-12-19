@@ -13,8 +13,8 @@ export class ArticlesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getArticles(): Observable<Article[]> {
-    return this.httpClient.get<Article[]>(`${this.baseURL}${this.apiPath}`);
+  getArticles(search: string): Observable<Article[]> {
+    return this.httpClient.get<Article[]>(`${this.baseURL}${this.apiPath}?search=${search}`);
   }
 
   getOneArticle(id: number): Observable<Article> {

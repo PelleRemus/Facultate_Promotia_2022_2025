@@ -18,11 +18,11 @@ namespace BlogApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllArticles()
+        public ActionResult GetAllArticles([FromQuery] string search)
         {
             try
             {
-                var articles = _articlesService.GetAllArticles();
+                var articles = _articlesService.GetAllArticles(search);
                 return new OkObjectResult(articles);
             }
             catch
@@ -35,7 +35,7 @@ namespace BlogApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetArticle(int id)
+        public ActionResult GetArticle([FromRoute] int id)
         {
             try
             {

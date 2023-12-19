@@ -13,8 +13,14 @@ export class HomeComponent {
   isLoading: boolean = true;
 
   constructor(private articlesService: ArticlesService, public service: GlobalService) {
-    this.articlesService.getArticles().subscribe(async (res) => {
-      await service.delay(1000);
+    this.service.searchChange.subscribe(value => this.getArticles(value));
+    this.getArticles('');
+  }
+
+  getArticles(search: string) {
+    this.isLoading = true;
+    this.articlesService.getArticles(search).subscribe(async (res) => {
+      await this.service.delay(500);
       this.isLoading = false;
       this.articles = res;
     })

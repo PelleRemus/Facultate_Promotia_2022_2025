@@ -12,9 +12,13 @@ namespace BlogApp.Repositories
             _dbContext = dbContext;
         }
 
-        public List<Article> GetAllArticles()
+        public List<Article> GetAllArticles(string search)
         {
-            return _dbContext.Articles.Include(a => a.Author).ToList();
+            return _dbContext.Articles
+                .Include(a => a.Author)
+                .Where(article => string.IsNullOrEmpty(search) ||
+                                article.Title.ToLower().Contains(search.ToLower())
+                ).ToList();
         }
 
         public Article GetArticle(int id)

@@ -12,9 +12,9 @@ namespace BlogApp.Services
             _articlesRepository = articlesRepository;
         }
 
-        public List<Article> GetAllArticles()
+        public List<Article> GetAllArticles(string search)
         {
-            return _articlesRepository.GetAllArticles();
+            return _articlesRepository.GetAllArticles(search);
         }
 
         public Article GetArticle(int id)

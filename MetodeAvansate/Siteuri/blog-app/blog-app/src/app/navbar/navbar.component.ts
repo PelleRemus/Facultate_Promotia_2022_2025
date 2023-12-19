@@ -33,6 +33,10 @@ export class NavbarComponent {
 		this.service.isDarkMode = !this.service.isDarkMode
 	}
 
+	activateSearch(search: string) {
+		this.service.setSearch(search);
+	}
+
 	logout() {
 		localStorage.removeItem('token');
 		this.service.setLogIn(false);
