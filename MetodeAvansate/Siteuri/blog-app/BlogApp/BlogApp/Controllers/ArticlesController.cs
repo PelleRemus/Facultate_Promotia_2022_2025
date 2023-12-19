@@ -87,6 +87,16 @@ namespace BlogApp.Controllers
         [Authorize]
         public ActionResult EditArticle(int id, [FromBody] Article article)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var claims = identity?.Claims;
+            int userId = int.Parse(claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+            string role = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "";
+
+            if (article.AuthorId != userId && role != "Admin")
+            {
+                return new ForbidResult();
+            }
+
             try
             {
                 _articlesService.EditArticle(id, article);
