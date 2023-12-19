@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Article } from '../models/article';
 import { ArticlesService } from '../services/articles.service';
@@ -15,7 +17,9 @@ export class AddArticlePageComponent {
     content: new FormControl<string>('', [Validators.required, Validators.minLength(25)]),
   });
 
-  constructor(private articlesService: ArticlesService) { }
+  constructor(private articlesService: ArticlesService,
+    private router: Router,
+    private location: Location) { }
 
   addArticle() {
     if(this.form.valid) {
@@ -25,8 +29,12 @@ export class AddArticlePageComponent {
       } as Article;
 
       this.articlesService.postArticle(article).subscribe(res => {
-        console.log(res);
+        this.router.navigate(['article', res.id]);
       })
     }
+  }
+
+  back() {
+    this.location.back();
   }
 }

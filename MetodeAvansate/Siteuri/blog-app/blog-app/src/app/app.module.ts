@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from  '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
-import { NgxBootstrapIconsModule, envelopeFill, phoneFill, giftFill } from 'ngx-bootstrap-icons';
+import { NgxBootstrapIconsModule, envelopeFill, phoneFill, giftFill, pencilFill, trashFill } from 'ngx-bootstrap-icons';
 const icons = {
   envelopeFill,
   phoneFill,
-  giftFill
+  giftFill,
+  pencilFill,
+  trashFill
 };
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +25,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { AddArticlePageComponent } from './add-article-page/add-article-page.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { EditArticlePageComponent } from './edit-article-page/edit-article-page.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     UserPageComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    AddArticlePageComponent
+    AddArticlePageComponent,
+    EditArticlePageComponent
   ],
   imports: [
     BrowserModule,

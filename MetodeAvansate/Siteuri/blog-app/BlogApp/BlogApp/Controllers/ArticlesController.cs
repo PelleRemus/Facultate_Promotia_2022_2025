@@ -1,6 +1,7 @@
 ﻿using BlogApp.Models;
 using BlogApp.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -108,8 +109,19 @@ namespace BlogApp.Controllers
         [Authorize]
         public ActionResult DeleteArticle(int id)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var claims = identity?.Claims;
+            int userId = int.Parse(claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+            string role = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "";
+
             try
             {
+                Article existing = _articlesService.GetArticle(id);
+                if (existing.AuthorId != userId && role != "Admin")
+                {
+                    return new ForbidResult();
+                }
+
                 Article dbArticle = _articlesService.DeleteArticle(id);
                 return new OkObjectResult(dbArticle);
             }

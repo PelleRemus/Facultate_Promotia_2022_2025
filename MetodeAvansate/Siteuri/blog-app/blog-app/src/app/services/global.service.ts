@@ -8,7 +8,7 @@ export class GlobalService {
 
   baseURL: string = "https://localhost:7107/";
   private search: string = '';
-  isDarkMode = false;
+  isDarkMode = true;
   isLoggedIn = false;
 
   constructor() { }
