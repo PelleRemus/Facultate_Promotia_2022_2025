@@ -1,0 +1,17 @@
+button {
+    transition: transform 0.5s, padding 1s, background-color 2s;
+    //transform: translate(-250px, 0);
+}
+div {
+    padding: 50px
+}
+
+div:hover{
+    button {
+        transform: /*translate(250px, 0),*/ rotate(45deg)
+    }
+}
+button:hover {
+    padding: 10px;
+    background-color: red;
+}
