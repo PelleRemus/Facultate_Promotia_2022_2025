@@ -10,7 +10,7 @@ namespace TurnurileLuiHanoi
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, System.EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             pictureBox1.Width = this.Width;
             Engine.Init(this);
@@ -27,7 +27,7 @@ namespace TurnurileLuiHanoi
             }
         }
 
-        private void NrOfDisks_ValueChanged(object sender, System.EventArgs e)
+        private void NrOfDisks_ValueChanged(object sender, EventArgs e)
         {
             int nrOfDisks = (int)NrOfDisks.Value;
             Engine.InitGame(nrOfDisks);
@@ -36,7 +36,7 @@ namespace TurnurileLuiHanoi
 
         private async void Solve_Click(object sender, EventArgs e)
         {
-            await Engine.SolveRecursive((int)NrOfDisks.Value, Engine.A, Engine.B, Engine.C);
+            await Engine.SolveRecursive((int)NrOfDisks.Value, Engine.A, Engine.B, Engine.C);//, Engine.D, Engine.E);
         }
     }
 }

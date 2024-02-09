@@ -7,7 +7,7 @@ namespace TurnurileLuiHanoi
     public class Rod
     {
         public const int Y = 250;
-        public const int Width = 400;
+        public const int Width = 300;
         public const int Height = 500;
 
         public int X { get; set; }
@@ -27,11 +27,11 @@ namespace TurnurileLuiHanoi
             Display.Click += Display_Click;
         }
 
-        private void Display_Click(object sender, System.EventArgs e)
+        private async void Display_Click(object sender, System.EventArgs e)
         {
             if (Display.Cursor == Cursors.Hand)
             {
-                Engine.Move(Engine.selectedRod, this);
+                await Engine.Move(Engine.selectedRod, this);
             }
         }
 
