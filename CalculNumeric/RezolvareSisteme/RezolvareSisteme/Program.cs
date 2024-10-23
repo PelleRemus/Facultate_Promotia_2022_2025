@@ -19,9 +19,9 @@ namespace RezolvareSisteme
 
             // MetodaGauss();
 
-            SistTridiagonal();
+            // SistTridiagonal();
 
-            // Jacobi();
+            Jacobi();
 
             Afisare();
             Console.ReadKey();
