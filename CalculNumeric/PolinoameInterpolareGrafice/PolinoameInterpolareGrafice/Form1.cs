@@ -21,9 +21,9 @@ namespace PolinoameInterpolareGrafice
         Bitmap bitmap;
         decimal x0, xn, y0, yn;
 
-        int m;
-        decimal[] x, y, u;
-        decimal[,] Nf;
+        int m, n;
+        decimal[] x, y, f, u;
+        decimal[,] Nf, T;
 
         private void button1_Click(object sender, EventArgs e)
         {
