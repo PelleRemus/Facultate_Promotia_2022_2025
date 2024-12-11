@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PolinoameInterpolareGrafice
@@ -66,6 +67,42 @@ namespace PolinoameInterpolareGrafice
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            n = 7;
+            x = new decimal[] { 7.5M, 10.5M, 13, 15.5M, 18, 21, 24, 27 };
+            y = new decimal[] { 130M, 121, 128, 96, 122, 138, 114, 90 };
+            x0 = x[0];
+            xn = x[n];
+            y0 = y.Min();
+            yn = y.Max();
+
+            decimal q = (xn - x0) / 1000;
+            decimal[] h = new decimal[n + 1];
+            for (int i = 1; i <= n; i++)
+            {
+                h[i] = x[i] - x[i - 1];
+            }
+
+            decimal[] a = new decimal[n + 1];
+            decimal[] b = new decimal[n + 1];
+            decimal[] c = new decimal[n + 1];
+            decimal[] d = new decimal[n + 1];
+            for (int i = 1; i <= n - 1; i++)
+            {
+                a[i] = 2;
+                d[i] = 6M / (h[i] + h[i + 1]) *
+                    ((y[i + 1] - y[i]) / h[i + 1] - (y[i] - y[i - 1]) / h[i]);
+            }
+            for (int i = 2; i <= n - 2; i++)
+            {
+                b[i] = h[i] / (h[i] + h[i + 1]);
+                c[i] = 1 - b[i];
+            }
+            b[n - 1] = h[n - 1] / (h[n - 1] + h[n]);
+            c[1] = h[2] / (h[1] + h[2]);
         }
 
         public void DrawGraph(decimal[] x, decimal[] y)
