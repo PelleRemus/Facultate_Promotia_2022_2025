@@ -1,4 +1,6 @@
-﻿using FeaturesPlatform.Database;
+﻿using FeaturesPlatform.Application.Common.Interfaces;
+using FeaturesPlatform.Database;
+using FeaturesPlatform.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,9 @@ namespace FeaturesPlatform.Infrastructure
         {
             services.AddDbContext<FeaturesPlatformDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

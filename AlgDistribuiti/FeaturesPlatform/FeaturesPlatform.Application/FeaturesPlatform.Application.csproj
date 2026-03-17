@@ -10,4 +10,8 @@
     <ProjectReference Include="..\FeaturesPlatform.Domain\FeaturesPlatform.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Behaviour\" />
+  </ItemGroup>
+
 </Project>
