@@ -1,4 +1,4 @@
-﻿namespace FeaturesPlatform.Domain.Events
+﻿namespace FeaturesPlatform.Domain.Common
 {
     public interface IDomainEvent
     {

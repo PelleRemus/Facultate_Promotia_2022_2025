@@ -11,6 +11,7 @@ namespace FeaturesPlatform.Database
         }
 
         public DbSet<Project> Projects => Set<Project>();
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

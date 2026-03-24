@@ -1,4 +1,6 @@
-﻿namespace FeaturesPlatform.Domain.Events
+﻿using FeaturesPlatform.Domain.Common;
+
+namespace FeaturesPlatform.Domain.Events
 {
     public class FeatureCreatedDomainEvent : IDomainEvent
     {

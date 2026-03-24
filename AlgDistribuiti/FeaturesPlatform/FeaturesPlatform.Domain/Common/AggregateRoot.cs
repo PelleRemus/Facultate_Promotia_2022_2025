@@ -1,6 +1,4 @@
-﻿using FeaturesPlatform.Domain.Events;
-
-namespace FeaturesPlatform.Domain.Common
+﻿namespace FeaturesPlatform.Domain.Common
 {
     public class AggregateRoot : Entity
     {

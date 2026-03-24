@@ -1,5 +1,4 @@
-
-using FeaturesPlatform.Infrastructure;
+using FeaturesPlatform.Infrastructure.DependancyInjection;
 
 namespace FeaturesPlatform
 {
