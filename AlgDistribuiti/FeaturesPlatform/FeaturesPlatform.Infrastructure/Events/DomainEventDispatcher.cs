@@ -27,7 +27,7 @@ namespace FeaturesPlatform.Infrastructure.Events
                 {
                     var method = handlerType.GetMethod("Handle");
 
-                    await (Task)method!.Invoke(handler, new object[] { domainEvent, cancellationToken })!;
+                    await (Task)method!.Invoke(handler, [ domainEvent, cancellationToken ])!;
                 }
             }
         }

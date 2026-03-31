@@ -33,8 +33,8 @@ namespace FeaturesPlatform.Infrastructure.Persistence.UnitOfWork
             var outboxMessages = events.Select(e => new OutboxMessage
             {
                 Id = Guid.NewGuid(),
-                Type = e.GetType().Name,
-                Payload = JsonSerializer.Serialize(e),
+                Type = e.GetType().AssemblyQualifiedName!,
+                Payload = JsonSerializer.Serialize(e, e.GetType()),
                 OccurredOn = e.OccurredOn
             }).ToList();
 

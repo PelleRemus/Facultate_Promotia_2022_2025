@@ -2,53 +2,47 @@
 using FeaturesPlatform.Database;
 using FeaturesPlatform.Domain.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 
 namespace FeaturesPlatform.Infrastructure.Messaging.Outbox
 {
-    public class OutboxProcessor : BackgroundService
+    public class OutboxProcessor
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly FeaturesPlatformDbContext _context;
+        private readonly IDomainEventDispatcher _dispatcher;
+        //private readonly IOptions<OutboxOptions> _options;
 
-        public OutboxProcessor(IServiceProvider serviceProvider)
+        public OutboxProcessor(FeaturesPlatformDbContext context,
+            IDomainEventDispatcher dispatcher/*, IOptions<OutboxOptions> options*/)
         {
-            _serviceProvider = serviceProvider;
+            _context = context;
+            _dispatcher = dispatcher;
+            //_options = options;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public async Task ProcessAsync(CancellationToken ct)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            var messages = await _context.OutboxMessages
+                .Where(x => x.ProcessedOn == null)
+                .OrderBy(x => x.OccurredOn)
+                .Take(20)
+                .ToListAsync(ct);
+
+            foreach (var message in messages)
             {
-                using var scope = _serviceProvider.CreateScope();
+                var type = Type.GetType(message.Type);
 
-                var context = scope.ServiceProvider.GetRequiredService<FeaturesPlatformDbContext>();
-                var dispatcher = scope.ServiceProvider.GetRequiredService<IDomainEventDispatcher>();
+                if (type is null)
+                    continue;
 
-                var messages = await context.OutboxMessages
-                    .Where(x => x.ProcessedOn == null)
-                    .Take(20)
-                    .ToListAsync(stoppingToken);
+                var domainEvent = (IDomainEvent)JsonSerializer.Deserialize(message.Payload, type)!;
 
-                foreach (var message in messages)
-                {
-                    var type = Type.GetType(message.Type); // sau:   e.GetType().AssemblyQualifiedName
+                await _dispatcher.DispatchAsync([domainEvent], ct);
 
-                    if (type is null)
-                        continue;
-
-                    var domainEvent = (IDomainEvent)JsonSerializer.Deserialize(message.Payload, type)!;
-
-                    await dispatcher.DispatchAsync([domainEvent], stoppingToken);
-
-                    message.ProcessedOn = DateTime.UtcNow;
-                }
-
-                await context.SaveChangesAsync(stoppingToken);
-
-                await Task.Delay(2000, stoppingToken);
+                message.ProcessedOn = DateTime.UtcNow;
             }
+
+            await _context.SaveChangesAsync(ct);
         }
     }
 }

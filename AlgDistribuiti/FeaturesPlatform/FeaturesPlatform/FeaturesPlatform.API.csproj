@@ -24,8 +24,4 @@
     <ProjectReference Include="..\FeaturesPlatform.Infrastructure\FeaturesPlatform.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,8 @@
 ﻿using FeaturesPlatform.Application.Common.DomainEvents;
 using FeaturesPlatform.Application.Common.Interfaces;
+using FeaturesPlatform.Application.Features.Features.Commands;
 using FeaturesPlatform.Application.Features.Features.EventHandlers;
+using FeaturesPlatform.Application.Features.Features.Queries;
 using FeaturesPlatform.Database;
 using FeaturesPlatform.Database.Repositories;
 using FeaturesPlatform.Domain.Events;
@@ -22,12 +24,16 @@ namespace FeaturesPlatform.Infrastructure.DependancyInjection
             services.AddDbContext<FeaturesPlatformDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddHostedService<OutboxProcessor>();
+            //services.AddScoped<IOptions<OutboxOptions>, OptionsWrapper>();
+            services.AddScoped<OutboxProcessor>();
+            services.AddHostedService<OutboxBackgroundService>();
 
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
 
+            services.AddScoped<CreateFeatureCommandHandler>();
+            services.AddScoped<GetFeaturesByProjectQueryHandler>();
             services.AddScoped<IDomainEventHandler<FeatureCreatedDomainEvent>, FeatureCreatedEventHandler>();
 
             return services;
