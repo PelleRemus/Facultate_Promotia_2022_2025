@@ -1,4 +1,5 @@
 ﻿using FeaturesPlatform.Application.Common.Interfaces;
+using FeaturesPlatform.Application.Common.Messaging;
 using FeaturesPlatform.Database;
 using FeaturesPlatform.Domain.Common;
 using Microsoft.EntityFrameworkCore;
@@ -9,14 +10,16 @@ namespace FeaturesPlatform.Infrastructure.Messaging.Outbox
     public class OutboxProcessor
     {
         private readonly FeaturesPlatformDbContext _context;
-        private readonly IDomainEventDispatcher _dispatcher;
+        private readonly IMessagePublisher _publisher;
+        //private readonly IDomainEventDispatcher _dispatcher;
         //private readonly IOptions<OutboxOptions> _options;
 
-        public OutboxProcessor(FeaturesPlatformDbContext context,
-            IDomainEventDispatcher dispatcher/*, IOptions<OutboxOptions> options*/)
+        public OutboxProcessor(FeaturesPlatformDbContext context, IMessagePublisher publisher
+            /*IDomainEventDispatcher dispatcher, IOptions<OutboxOptions> options*/)
         {
             _context = context;
-            _dispatcher = dispatcher;
+            _publisher = publisher;
+            //_dispatcher = dispatcher;
             //_options = options;
         }
 
@@ -37,7 +40,7 @@ namespace FeaturesPlatform.Infrastructure.Messaging.Outbox
 
                 var domainEvent = (IDomainEvent)JsonSerializer.Deserialize(message.Payload, type)!;
 
-                await _dispatcher.DispatchAsync([domainEvent], ct);
+                await _publisher.PublishAsync(domainEvent, ct);
 
                 message.ProcessedOn = DateTime.UtcNow;
             }

@@ -10,6 +10,7 @@ namespace FeaturesPlatform.Domain.Aggregates.Feature
 
         internal FeatureItem(string title)
         {
+            Id = Guid.NewGuid();
             Title = title;
             Status = FeatureStatus.Open;
         }

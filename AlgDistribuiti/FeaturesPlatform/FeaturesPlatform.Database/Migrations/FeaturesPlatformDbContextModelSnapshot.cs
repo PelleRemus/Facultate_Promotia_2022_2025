@@ -50,7 +50,6 @@ namespace FeaturesPlatform.Database.Migrations
             modelBuilder.Entity("FeaturesPlatform.Domain.Aggregates.Feature.FeatureItem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ProjectId")

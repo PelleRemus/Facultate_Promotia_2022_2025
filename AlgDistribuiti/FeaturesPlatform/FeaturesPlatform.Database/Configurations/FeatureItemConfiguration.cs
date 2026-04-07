@@ -9,6 +9,8 @@ namespace FeaturesPlatform.Database.Configurations
         public void Configure(EntityTypeBuilder<FeatureItem> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id)
+                .ValueGeneratedNever();
 
             builder.Property(x => x.Title)
                    .IsRequired()
