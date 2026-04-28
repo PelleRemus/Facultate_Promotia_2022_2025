@@ -4,6 +4,8 @@ namespace FeaturesPlatform.Domain.Events
 {
     public class FeatureCreatedDomainEvent : IDomainEvent
     {
+        public Guid Id { get; }
+
         public Guid FeatureId { get; }
 
         public Guid ProjectId { get; }

@@ -8,6 +8,7 @@ using FeaturesPlatform.Database;
 using FeaturesPlatform.Database.Repositories;
 using FeaturesPlatform.Domain.Events;
 using FeaturesPlatform.Infrastructure.Events;
+using FeaturesPlatform.Infrastructure.Messaging;
 using FeaturesPlatform.Infrastructure.Messaging.Outbox;
 using FeaturesPlatform.Infrastructure.Messaging.RabbitMQ;
 using FeaturesPlatform.Infrastructure.Persistence.UnitOfWork;
@@ -43,6 +44,7 @@ namespace FeaturesPlatform.Infrastructure.DependancyInjection
                 return factory.CreateConnectionAsync().GetAwaiter().GetResult();
             });
             services.AddScoped<IMessagePublisher, RabbitMqPublisher>();
+            services.AddScoped<MessagingOptions>();
 
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

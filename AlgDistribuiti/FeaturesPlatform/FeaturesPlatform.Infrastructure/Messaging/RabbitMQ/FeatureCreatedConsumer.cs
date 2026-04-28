@@ -1,5 +1,8 @@
-﻿using FeaturesPlatform.Application.Features.Features.EventHandlers;
+﻿using FeaturesPlatform.Application.Common.DomainEvents;
+using FeaturesPlatform.Database;
+using FeaturesPlatform.Database.Entities;
 using FeaturesPlatform.Domain.Events;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -24,6 +27,7 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
         {
             await using var channel = await _connection.CreateChannelAsync();
 
+            // Pentru mesajele normale
             var exchange = "features.events";
             var queue = "features.created";
 
@@ -47,6 +51,25 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                 routingKey: string.Empty,
                 cancellationToken: stoppingToken);
 
+            // Pentru mesajele care nu pot fi procesate (DLQ)
+            exchange = "features.dlq";
+            queue = "features.events.dlq";
+
+            await channel.ExchangeDeclareAsync(
+                exchange: exchange,
+                type: "fanout");
+
+            await channel.QueueDeclareAsync(
+                queue: queue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false);
+
+            await channel.QueueBindAsync(
+                queue: queue,
+                exchange: exchange,
+                routingKey: "");
+
             var consumer = new AsyncEventingBasicConsumer(channel);
 
             consumer.ReceivedAsync += async (sender, args) =>
@@ -55,10 +78,57 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                 var @event = JsonSerializer.Deserialize<FeatureCreatedDomainEvent>(json);
 
                 using var scope = _serviceProvider.CreateScope();
-                var handler = scope.ServiceProvider.GetRequiredService<FeatureCreatedEventHandler>();
+                var handler = scope.ServiceProvider.GetRequiredService<IDomainEventHandler<FeatureCreatedDomainEvent>>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<FeaturesPlatformDbContext>();
+                var options = scope.ServiceProvider.GetRequiredService<MessagingOptions>();
 
-                await handler.Handle(@event!, stoppingToken);
-                await channel.BasicAckAsync(args.DeliveryTag, multiple: false, stoppingToken);
+                // Check the inbox first
+                var inboxMessage = await dbContext.InboxMessages.FirstOrDefaultAsync(x => x.Id == @event!.Id);
+                if (inboxMessage != null && inboxMessage.RetryCount > options.MaxRetryCount)
+                {
+                    // already exceeded retries → ACK and ignore
+                    await channel.BasicAckAsync(args.DeliveryTag, false, stoppingToken);
+                    return;
+                }
+
+                using var transaction = await dbContext.Database.BeginTransactionAsync();
+                try
+                {
+                    // 1. Save Inbox record if needed
+                    if (inboxMessage == null)
+                    {
+                        dbContext.InboxMessages.Add(new InboxMessage
+                        {
+                            Id = @event!.Id,
+                            ReceivedAt = DateTime.UtcNow,
+                            Type = @event!.GetType().FullName!,
+                            RetryCount = 0
+                        });
+                    }
+
+                    // 2. Handle event
+                    await handler.Handle(@event!, stoppingToken);
+
+                    await dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    await channel.BasicAckAsync(args.DeliveryTag, false);
+                }
+                catch
+                {
+                    inboxMessage.RetryCount++;
+                    await dbContext.SaveChangesAsync();
+
+                    if (inboxMessage.RetryCount >= options.MaxRetryCount)
+                    {
+                        // ❌ send to DLQ
+                        await channel.BasicRejectAsync(args.DeliveryTag, requeue: false);
+                    }
+                    else
+                    {
+                        // 🔁 retry
+                        await channel.BasicNackAsync(args.DeliveryTag, false, requeue: true);
+                    }
+                }
             };
 
             await channel.BasicConsumeAsync(

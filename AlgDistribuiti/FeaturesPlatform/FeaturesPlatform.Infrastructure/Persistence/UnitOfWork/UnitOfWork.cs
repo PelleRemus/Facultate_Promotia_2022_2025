@@ -1,5 +1,6 @@
 ﻿using FeaturesPlatform.Application.Common.Interfaces;
 using FeaturesPlatform.Database;
+using FeaturesPlatform.Database.Entities;
 using FeaturesPlatform.Domain.Common;
 using System.Text.Json;
 

@@ -1,6 +1,6 @@
 ﻿using FeaturesPlatform.Domain.Common;
 
-namespace FeaturesPlatform.Database
+namespace FeaturesPlatform.Database.Entities
 {
     public class OutboxMessage : Entity
     {
