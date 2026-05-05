@@ -35,7 +35,7 @@ namespace FeaturesPlatform.Infrastructure.Persistence.UnitOfWork
             {
                 Id = Guid.NewGuid(),
                 Type = e.GetType().AssemblyQualifiedName!,
-                Payload = JsonSerializer.Serialize(e, e.GetType()),
+                Payload = Newtonsoft.Json.JsonConvert.SerializeObject(e),
                 OccurredOn = e.OccurredOn
             }).ToList();
 

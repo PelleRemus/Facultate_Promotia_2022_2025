@@ -28,7 +28,7 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                 autoDelete: false,
                 cancellationToken: ct);
 
-            var json = JsonSerializer.Serialize(domainEvent, domainEvent.GetType());
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(domainEvent);
             var body = Encoding.UTF8.GetBytes(json);
 
             await channel.BasicPublishAsync(

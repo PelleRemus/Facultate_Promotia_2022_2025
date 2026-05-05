@@ -4,7 +4,7 @@ namespace FeaturesPlatform.Domain.Events
 {
     public class FeatureCreatedDomainEvent : IDomainEvent
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
         public Guid FeatureId { get; }
 
@@ -14,6 +14,7 @@ namespace FeaturesPlatform.Domain.Events
 
         public FeatureCreatedDomainEvent(Guid featureId, Guid projectId)
         {
+            Id = Guid.NewGuid();
             FeatureId = featureId;
             ProjectId = projectId;
             OccurredOn = DateTime.UtcNow;

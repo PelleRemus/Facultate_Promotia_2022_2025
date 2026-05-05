@@ -1,9 +1,8 @@
-﻿using FeaturesPlatform.Application.Common.Interfaces;
-using FeaturesPlatform.Application.Common.Messaging;
+﻿using FeaturesPlatform.Application.Common.Messaging;
 using FeaturesPlatform.Database;
 using FeaturesPlatform.Domain.Common;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace FeaturesPlatform.Infrastructure.Messaging.Outbox
 {
@@ -38,7 +37,7 @@ namespace FeaturesPlatform.Infrastructure.Messaging.Outbox
                 if (type is null)
                     continue;
 
-                var domainEvent = (IDomainEvent)JsonSerializer.Deserialize(message.Payload, type)!;
+                var domainEvent = (IDomainEvent)JsonConvert.DeserializeObject(message.Payload, type);
 
                 await _publisher.PublishAsync(domainEvent, ct);
 

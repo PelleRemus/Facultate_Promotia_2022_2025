@@ -27,55 +27,32 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
         {
             await using var channel = await _connection.CreateChannelAsync();
 
-            // Pentru mesajele normale
-            var exchange = "features.events";
-            var queue = "features.created";
-
-            await channel.ExchangeDeclareAsync(
-                exchange: exchange,
-                type: ExchangeType.Fanout,
-                durable: true,
-                autoDelete: false,
-                cancellationToken: stoppingToken);
-
-            await channel.QueueDeclareAsync(
-                queue: queue,
-                durable: true,
-                exclusive: false,
-                autoDelete: false,
-                cancellationToken: stoppingToken);
-
-            await channel.QueueBindAsync(
-                queue: queue,
-                exchange: exchange,
-                routingKey: string.Empty,
-                cancellationToken: stoppingToken);
-
             // Pentru mesajele care nu pot fi procesate (DLQ)
-            exchange = "features.dlq";
-            queue = "features.events.dlq";
+            var dlqExchange = "features.dlq";
+            var dlqQueue = "features.events.dlq";
+            var args = new Dictionary<string, object>
+            {
+                { "x-dead-letter-exchange", dlqExchange }
+            };
 
-            await channel.ExchangeDeclareAsync(
-                exchange: exchange,
-                type: "fanout");
+            await channel.ExchangeDeclareAsync(dlqExchange, ExchangeType.Fanout);
+            await channel.QueueDeclareAsync(dlqQueue, true, false, false);
+            await channel.QueueBindAsync(dlqQueue, dlqExchange, string.Empty);
 
-            await channel.QueueDeclareAsync(
-                queue: queue,
-                durable: true,
-                exclusive: false,
-                autoDelete: false);
+            // Pentru mesajele normale
+            var mainExchange = "features.events";
+            var mainQueue = "features.created";
 
-            await channel.QueueBindAsync(
-                queue: queue,
-                exchange: exchange,
-                routingKey: "");
+            await channel.ExchangeDeclareAsync(mainExchange, ExchangeType.Fanout, true);
+            await channel.QueueDeclareAsync(mainQueue, true, false, false, arguments: args);
+            await channel.QueueBindAsync(mainQueue, mainExchange, string.Empty);
 
             var consumer = new AsyncEventingBasicConsumer(channel);
 
             consumer.ReceivedAsync += async (sender, args) =>
             {
                 var json = Encoding.UTF8.GetString(args.Body.ToArray());
-                var @event = JsonSerializer.Deserialize<FeatureCreatedDomainEvent>(json);
+                var @event = Newtonsoft.Json.JsonConvert.DeserializeObject<FeatureCreatedDomainEvent>(json);
 
                 using var scope = _serviceProvider.CreateScope();
                 var handler = scope.ServiceProvider.GetRequiredService<IDomainEventHandler<FeatureCreatedDomainEvent>>();
@@ -91,32 +68,39 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                     return;
                 }
 
+                // 1. Save Inbox record if needed
+                if (inboxMessage == null)
+                {
+                    inboxMessage = new InboxMessage
+                    {
+                        Id = @event!.Id,
+                        ReceivedAt = DateTime.UtcNow,
+                        Type = @event!.GetType().FullName!,
+                        RetryCount = 0
+                    };
+                    dbContext.InboxMessages.Add(inboxMessage);
+                }
+                await dbContext.SaveChangesAsync();
+
                 using var transaction = await dbContext.Database.BeginTransactionAsync();
                 try
                 {
-                    // 1. Save Inbox record if needed
-                    if (inboxMessage == null)
-                    {
-                        dbContext.InboxMessages.Add(new InboxMessage
-                        {
-                            Id = @event!.Id,
-                            ReceivedAt = DateTime.UtcNow,
-                            Type = @event!.GetType().FullName!,
-                            RetryCount = 0
-                        });
-                    }
-
                     // 2. Handle event
                     await handler.Handle(@event!, stoppingToken);
+                    throw new Exception("Simulated failure"); // for testing retry and DLQ
 
-                    await dbContext.SaveChangesAsync();
                     await transaction.CommitAsync();
                     await channel.BasicAckAsync(args.DeliveryTag, false);
                 }
                 catch
                 {
+                    if (inboxMessage == null)
+                    {
+                        return;
+                    }
                     inboxMessage.RetryCount++;
                     await dbContext.SaveChangesAsync();
+                    await transaction.CommitAsync();
 
                     if (inboxMessage.RetryCount >= options.MaxRetryCount)
                     {
@@ -130,12 +114,7 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                     }
                 }
             };
-
-            await channel.BasicConsumeAsync(
-                queue: queue,
-                autoAck: false,
-                consumer: consumer,
-                cancellationToken: stoppingToken);
+            await channel.BasicConsumeAsync(queue: mainQueue, autoAck: false, consumer: consumer, cancellationToken: stoppingToken);
 
             // keep the background service alive
             await Task.Delay(Timeout.Infinite, stoppingToken);
