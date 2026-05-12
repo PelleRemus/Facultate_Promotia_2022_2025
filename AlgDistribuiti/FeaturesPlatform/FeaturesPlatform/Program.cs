@@ -1,3 +1,4 @@
+using FeaturesPlatform.API.Middleware;
 using FeaturesPlatform.Infrastructure.DependancyInjection;
 
 namespace FeaturesPlatform
@@ -28,6 +29,7 @@ namespace FeaturesPlatform
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseMiddleware<CorrelationIdMiddleware>();
 
 
             app.MapControllers();

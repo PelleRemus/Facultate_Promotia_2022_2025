@@ -5,10 +5,10 @@ using FeaturesPlatform.Domain.Events;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
-using System.Text.Json;
 
 namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
 {
@@ -16,11 +16,15 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IConnection _connection;
+        private readonly ILogger<FeatureCreatedConsumer> _logger;
 
-        public FeatureCreatedConsumer(IServiceProvider serviceProvider, IConnection connection)
+        public FeatureCreatedConsumer(IServiceProvider serviceProvider,
+            IConnection connection,
+            ILogger<FeatureCreatedConsumer> logger)
         {
             _serviceProvider = serviceProvider;
             _connection = connection;
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -53,6 +57,7 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
             {
                 var json = Encoding.UTF8.GetString(args.Body.ToArray());
                 var @event = Newtonsoft.Json.JsonConvert.DeserializeObject<FeatureCreatedDomainEvent>(json);
+                _logger.LogInformation($"[FeatureCreatedConsumer] Processing event {@event.Id} with correlation {@event.CorrelationId}");
 
                 using var scope = _serviceProvider.CreateScope();
                 var handler = scope.ServiceProvider.GetRequiredService<IDomainEventHandler<FeatureCreatedDomainEvent>>();
@@ -87,13 +92,13 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                 {
                     // 2. Handle event
                     await handler.Handle(@event!, stoppingToken);
-                    throw new Exception("Simulated failure"); // for testing retry and DLQ
-
+                    // throw new Exception("Simulated failure"); // for testing retry and DLQ
                     await transaction.CommitAsync();
                     await channel.BasicAckAsync(args.DeliveryTag, false);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    _logger.LogWarning($"Error processing event {@event.Id}: {ex.Message}");
                     if (inboxMessage == null)
                     {
                         return;
@@ -105,11 +110,13 @@ namespace FeaturesPlatform.Infrastructure.Messaging.RabbitMQ
                     if (inboxMessage.RetryCount >= options.MaxRetryCount)
                     {
                         // ❌ send to DLQ
+                        _logger.LogError($"Event {@event.Id} exceeded max retry count. Sending to DLQ.");
                         await channel.BasicRejectAsync(args.DeliveryTag, requeue: false);
                     }
                     else
                     {
                         // 🔁 retry
+                        _logger.LogWarning($"Retry {inboxMessage.RetryCount} for event {@event.Id}");
                         await channel.BasicNackAsync(args.DeliveryTag, false, requeue: true);
                     }
                 }

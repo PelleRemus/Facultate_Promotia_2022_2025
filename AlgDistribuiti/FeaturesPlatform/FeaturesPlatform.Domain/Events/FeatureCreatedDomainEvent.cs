@@ -6,15 +6,19 @@ namespace FeaturesPlatform.Domain.Events
     {
         public Guid Id { get; set; }
 
+        public Guid CorrelationId { get; set; }
+
         public Guid FeatureId { get; }
 
         public Guid ProjectId { get; }
 
         public DateTime OccurredOn { get; }
 
-        public FeatureCreatedDomainEvent(Guid featureId, Guid projectId)
+        public FeatureCreatedDomainEvent(Guid featureId, Guid projectId, Guid correlationId)
         {
             Id = Guid.NewGuid();
+            CorrelationId = correlationId;
+
             FeatureId = featureId;
             ProjectId = projectId;
             OccurredOn = DateTime.UtcNow;

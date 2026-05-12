@@ -1,4 +1,5 @@
-﻿using FeaturesPlatform.Application.Common.DomainEvents;
+﻿using FeaturesPlatform.Application.Common;
+using FeaturesPlatform.Application.Common.DomainEvents;
 using FeaturesPlatform.Application.Common.Interfaces;
 using FeaturesPlatform.Application.Common.Messaging;
 using FeaturesPlatform.Application.Features.Features.Commands;
@@ -49,6 +50,7 @@ namespace FeaturesPlatform.Infrastructure.DependancyInjection
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+            services.AddScoped<ICorrelationIdProvider, HttpCorrelationIdProvider>();
 
             services.AddScoped<CreateFeatureCommandHandler>();
             services.AddScoped<GetFeaturesByProjectQueryHandler>();

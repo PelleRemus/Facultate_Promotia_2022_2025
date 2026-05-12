@@ -21,12 +21,12 @@ namespace FeaturesPlatform.Domain.Aggregates.Project
             Name = name;
         }
 
-        public FeatureItem CreateFeature(string title)
+        public FeatureItem CreateFeature(string title, Guid correlationId)
         {
             var feature = new FeatureItem(title);
             _features.Add(feature);
 
-            RaiseEvent(new FeatureCreatedDomainEvent(feature.Id, Id));
+            RaiseEvent(new FeatureCreatedDomainEvent(feature.Id, Id, correlationId));
             return feature;
         }
     }
