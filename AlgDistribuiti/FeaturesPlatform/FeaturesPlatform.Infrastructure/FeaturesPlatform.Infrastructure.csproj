@@ -20,10 +20,4 @@
     <ProjectReference Include="..\FeaturesPlatform.Domain\FeaturesPlatform.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Helpers\" />
-    <Folder Include="Logging\" />
-    <Folder Include="Persistence\Interceptors\" />
-  </ItemGroup>
-
 </Project>
